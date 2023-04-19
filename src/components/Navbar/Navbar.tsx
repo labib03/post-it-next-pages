@@ -4,34 +4,48 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import Loader from "../Loader/Loader";
+import { useState } from "react";
 
 function Navbar() {
   const data = useSession();
+  const [isLoading, setIsloading] = useState(false);
+
+  const signOutHandler = async () => {
+    setIsloading(true);
+
+    await signOut().then(() => {
+      setIsloading(false);
+    });
+  };
 
   const renderComponent =
     data?.status?.toLowerCase() === AUTHENTICATED ? (
-      <>
-        <li>
-          <h1>{data?.data?.user?.name}</h1>
-        </li>
-        <li>
-          <Image
-            src={data?.data?.user?.image || ""}
-            width={24}
-            height={24}
-            alt="user-image"
-            className="rounded-full"
-          />
-        </li>
-        <li>
-          <button
-            onClick={() => signOut()}
-            className="bg-light px-6 py-2 text-primary rounded-lg tracking-wide transition-all duration-200 hover:bg-primary hover:text-light"
-          >
-            Sign Out
-          </button>
-        </li>
-      </>
+      isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <li>
+            <h1>{data?.data?.user?.name}</h1>
+          </li>
+          <li>
+            <Image
+              src={data?.data?.user?.image || ""}
+              width={24}
+              height={24}
+              alt="user-image"
+              className="rounded-full"
+            />
+          </li>
+          <li>
+            <button
+              onClick={signOutHandler}
+              className="bg-light px-6 py-2 text-primary rounded-lg tracking-wide transition-all duration-200 hover:bg-primary hover:text-light"
+            >
+              Sign Out
+            </button>
+          </li>
+        </>
+      )
     ) : (
       <button
         onClick={() => signIn()}
