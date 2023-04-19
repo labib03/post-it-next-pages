@@ -15,14 +15,16 @@ function Navbar() {
     setIsloading(true);
 
     await signOut().then(() => {
-      setIsloading(false);
+      setTimeout(() => {
+        setIsloading(false);
+      }, 100);
     });
   };
 
   const renderComponent =
     data?.status?.toLowerCase() === AUTHENTICATED ? (
       isLoading ? (
-        <Loader borderColor="border-sage-400" />
+        <Loader borderColor="border-sage-400" text="Loading" />
       ) : (
         <>
           <li className="flex gap-2">
@@ -57,6 +59,9 @@ function Navbar() {
 
   return (
     <nav className="flex justify-between items-center py-8">
+      {isLoading && (
+        <div className="absolute inset-0 bg-slate-50 opacity-50 z-50"></div>
+      )}
       <Link href={"/"}>
         <h1 className="font-bold text-2xl">Send it.</h1>
       </Link>
