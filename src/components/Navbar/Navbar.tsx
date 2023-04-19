@@ -1,10 +1,11 @@
+"use client";
+
 import { AUTHENTICATED } from "@/helpers/constants";
-import { Session } from "next-auth";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import Loader from "../Loader/Loader";
 import { useState } from "react";
+import Loader from "../Loader/Loader";
 
 function Navbar() {
   const data = useSession();
@@ -24,10 +25,7 @@ function Navbar() {
         <Loader />
       ) : (
         <>
-          <li>
-            <h1>{data?.data?.user?.name}</h1>
-          </li>
-          <li>
+          <li className="flex gap-2">
             <Image
               src={data?.data?.user?.image || ""}
               width={24}
@@ -35,11 +33,13 @@ function Navbar() {
               alt="user-image"
               className="rounded-full"
             />
+
+            <h1>{data?.data?.user?.name}</h1>
           </li>
           <li>
             <button
               onClick={signOutHandler}
-              className="bg-light px-6 py-2 text-primary rounded-lg tracking-wide transition-all duration-200 hover:bg-primary hover:text-light"
+              className="bg-red-200 border border-red-300 px-6 py-2 text-sm rounded-lg tracking-wide transition-all duration-200 hover:bg-red-300"
             >
               Sign Out
             </button>
@@ -49,7 +49,7 @@ function Navbar() {
     ) : (
       <button
         onClick={() => signIn()}
-        className="bg-dark px-6 py-2 text-white rounded-lg tracking-wide transition-all duration-200 hover:bg-secondary"
+        className="bg-sage-200 border border-sage-300 px-6 py-2 rounded-lg tracking-wide transition-all duration-200 hover:bg-sage-100"
       >
         Sign In
       </button>
