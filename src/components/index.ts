@@ -1,3 +1,4 @@
 import Navbar from "./Navbar/Navbar";
+import CreatePost from "./CreatePost/CreatePost";
 
-export { Navbar };
+export { Navbar, CreatePost };

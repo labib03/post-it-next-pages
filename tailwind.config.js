@@ -13,6 +13,8 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: {
+        light: "#FEFCF3",
+        "semi-light": "#F9EBC8",
         sage: {
           50: "#f5f7f2",
           100: "#e8ebe0",
@@ -38,6 +40,19 @@ module.exports = {
           800: "#9d1717",
           900: "#821a1a",
           950: "#470808",
+        },
+        champagne: {
+          50: "#fdf9ed",
+          100: "#f9ebc8",
+          200: "#f3d894",
+          300: "#edbf5c",
+          400: "#e9a836",
+          500: "#e1881f",
+          600: "#c76718",
+          700: "#a64917",
+          800: "#873a19",
+          900: "#6f3018",
+          950: "#3f1709",
         },
       },
     },

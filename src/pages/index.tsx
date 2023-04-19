@@ -1,9 +1,9 @@
-import { Navbar } from "@/components";
+import { CreatePost } from "@/components";
+
 export default function Home() {
   return (
     <>
-      <Navbar />
-      <h1>Home Screen</h1>
+      <CreatePost />
     </>
   );
 }
