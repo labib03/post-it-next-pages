@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import { ReactElement, ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({
   weight: ["400", "700", "300"],
@@ -36,6 +37,7 @@ export default function App({
             font-family: ${inter.style.fontFamily};
           }
         `}</style>
+        <Toaster />
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
     </QueryClientProvider>

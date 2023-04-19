@@ -18,9 +18,9 @@ export default async function handler(
 
   // validate payload
   if (payload.length > 400) {
-    return res
-      .status(403)
-      .json({ message: "Terlalu banyak kata yang dikirim" });
+    return res.status(403).json({
+      message: "Terlalu banyak kata yang dikirim, maksimal 400 huruf",
+    });
   }
   if (!payload.length) {
     return res.status(403).json({ message: "Harap ketikan sesuatu" });

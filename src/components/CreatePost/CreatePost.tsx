@@ -1,14 +1,32 @@
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { FormEvent, useState } from "react";
 import Loader from "../Loader/Loader";
+import { toast } from "react-hot-toast";
 
 function CreatePost() {
   const [inputValue, setInputValue] = useState("");
 
   const mutation = useMutation({
-    mutationFn: async (payload) => {
-      await axios.post("/api/posts/addPost", payload);
+    mutationFn: (payload) => {
+      return axios.post("/api/posts/addPost", payload);
+    },
+    onSuccess: (data) => {
+      toast.success("Yeay, post berhasil dibuat", {
+        id: "success",
+        position: "top-right",
+      });
+      setInputValue("");
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        const lengthChar = err.response?.data?.message?.length || "";
+        toast.error(err?.response?.data?.message, {
+          id: "error",
+          duration: lengthChar * 100,
+          position: "top-right",
+        });
+      }
     },
   });
 
@@ -23,6 +41,7 @@ function CreatePost() {
         rows={4}
         placeholder="Write something ..."
         value={inputValue}
+        disabled={mutation.isLoading}
         className="w-full bg-light border-2 px-4 py-2 border-sage-200 rounded-md transition-all duration-200 focus:border-light focus:outline-none placeholder:italic"
         onChange={(e) => setInputValue(e.target.value)}
       />
