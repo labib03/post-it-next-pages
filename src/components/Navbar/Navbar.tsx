@@ -22,7 +22,7 @@ function Navbar() {
   const renderComponent =
     data?.status?.toLowerCase() === AUTHENTICATED ? (
       isLoading ? (
-        <Loader />
+        <Loader borderColor="border-sage-400" />
       ) : (
         <>
           <li className="flex gap-2">
@@ -62,7 +62,11 @@ function Navbar() {
       </Link>
 
       <ul className="list-none flex gap-6 items-center">
-        {data?.status === "loading" ? <Loader /> : renderComponent}
+        {data?.status === "loading" ? (
+          <Loader borderColor="border-sage-300" text="Loading" />
+        ) : (
+          renderComponent
+        )}
       </ul>
     </nav>
   );
