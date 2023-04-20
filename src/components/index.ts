@@ -5,6 +5,7 @@ import SplashScreen from "./SplashScreen/SplashScreen";
 import AllPostDashboard from "./AllPostDashboard/AllPostDashboard";
 import AllPost from "./AllPost/AllPost";
 import Skeleton from "./Skeleton/Skeleton";
+import ModalConfirmation from "./ModalConfirmation/ModalConfirmation";
 
 export {
   Navbar,
@@ -14,4 +15,5 @@ export {
   AllPostDashboard,
   AllPost,
   Skeleton,
+  ModalConfirmation,
 };

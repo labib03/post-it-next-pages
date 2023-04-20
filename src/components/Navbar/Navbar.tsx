@@ -27,7 +27,7 @@ function Navbar() {
         <Loader borderColor="border-sage-400" text="Loading" />
       ) : (
         <>
-          <li className="hidden md:flex">
+          <li>
             <Link className="flex gap-2" href={"/dashboard"}>
               <Image
                 src={data?.data?.user?.image || ""}
@@ -37,7 +37,7 @@ function Navbar() {
                 className="rounded-full"
               />
 
-              <h1>{data?.data?.user?.name}</h1>
+              <h1 className="hidden md:flex">{data?.data?.user?.name}</h1>
             </Link>
           </li>
           <li>

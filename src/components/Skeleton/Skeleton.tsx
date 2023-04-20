@@ -7,7 +7,7 @@ type Props = {
 function Skeleton({ total }: Props) {
   return (
     <>
-      {[...Array(total)]?.map((idx) => (
+      {[...Array(total)]?.map((item, idx) => (
         <div key={idx} role="status" className="animate-pulse p-6 mt-10">
           <div className="flex items-center gap-2">
             <div className="flex items-center justify-center w-9 h-9 bg-slate-300 rounded-full">

@@ -2,6 +2,7 @@
 
 import {
   AllPostDashboard,
+  ModalConfirmation,
   RootLayout,
   Skeleton,
   SplashScreen,
@@ -10,11 +11,15 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 function Dashboard() {
   const session = useSession();
   const router = useRouter();
+
+  const [showModal, setShowModal] = useState(false);
+  const [postId, setPostId] = useState("");
 
   const queryClient = useQueryClient();
 
@@ -26,16 +31,15 @@ function Dashboard() {
   });
 
   const mutation = useMutation({
-    mutationFn: (payload) => {
-      return axios.post("/api/posts/deletePost", payload);
+    mutationFn: () => {
+      return axios.post("/api/posts/deletePost", { id: postId });
     },
-    onSuccess: (data) => {
-      toast.success("Yeay, post berhasil dihapus", {
+    onSuccess: () => {
+      toast.success("Post berhasil dihapus", {
         id: "success",
         position: "top-right",
       });
-      // setIsLoading(false);
-      // setInputValue("");
+      setShowModal(false);
       queryClient.invalidateQueries({ queryKey: ["posts-by-id"] });
     },
     onError: (err) => {
@@ -46,14 +50,18 @@ function Dashboard() {
           duration: lengthChar * 100,
           position: "top-right",
         });
-        // setIsLoading(false);
+        setShowModal(false);
       }
     },
   });
 
   const deleteHandler = (payload: string) => {
-    mutation.mutate({ id: payload });
+    setShowModal(!showModal);
+    setPostId(payload);
   };
+
+  console.log("-- loading 1 --", mutation?.status);
+  console.log("-- loading 2 --", query?.isFetching);
 
   if (session?.status?.toLowerCase() === "unauthenticated") {
     setTimeout(() => {
@@ -67,15 +75,26 @@ function Dashboard() {
   if (session?.status === "loading") {
     return <SplashScreen />;
   }
+
   return (
     <RootLayout>
       <div>All Post in This Account</div>
-      {query.status === "loading" ? <Skeleton total={3} /> : null}
+      {showModal && (
+        <ModalConfirmation
+          showModal={showModal}
+          setShowModal={setShowModal}
+          onDelete={() => mutation.mutate()}
+          isLoading={mutation?.status === "loading"}
+        />
+      )}
+      {query.status === "loading" || query?.isFetching ? (
+        <Skeleton total={3} />
+      ) : null}
       {query.status === "success" && (
         <AllPostDashboard
           user={query?.data?.data || []}
           data={query?.data?.data?.post || []}
-          deleteHandler={deleteHandler}
+          deleteHandler={(payload: string) => deleteHandler(payload)}
         />
       )}
     </RootLayout>

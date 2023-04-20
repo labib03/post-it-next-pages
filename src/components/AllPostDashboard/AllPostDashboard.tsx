@@ -1,5 +1,3 @@
-"use client";
-
 import { Post, User } from "@/helpers/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import moment from "moment";
