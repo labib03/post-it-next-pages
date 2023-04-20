@@ -1,11 +1,18 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import Loader from "../Loader/Loader";
 import { toast } from "react-hot-toast";
 
-function CreatePost() {
+type Props = {
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<boolean>>;
+};
+
+function CreatePost({ isLoading, setIsLoading }: Props) {
   const [inputValue, setInputValue] = useState("");
+
+  const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: (payload) => {
@@ -16,7 +23,9 @@ function CreatePost() {
         id: "success",
         position: "top-right",
       });
+      setIsLoading(false);
       setInputValue("");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
@@ -26,12 +35,14 @@ function CreatePost() {
           duration: lengthChar * 100,
           position: "top-right",
         });
+        setIsLoading(false);
       }
     },
   });
 
   const createPostHandler = (e: FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     mutation.mutate({ data: inputValue });
   };
 

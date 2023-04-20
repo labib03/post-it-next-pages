@@ -27,7 +27,7 @@ function Navbar() {
         <Loader borderColor="border-sage-400" text="Loading" />
       ) : (
         <>
-          <li className="flex gap-2">
+          <li className=" gap-2 hidden md:flex">
             <Image
               src={data?.data?.user?.image || ""}
               width={24}
@@ -60,7 +60,7 @@ function Navbar() {
   return (
     <nav className="flex justify-between items-center py-8">
       {isLoading && (
-        <div className="absolute inset-0 bg-slate-50 opacity-50 z-50"></div>
+        <div className="fixed inset-0 bg-slate-50 opacity-50 z-50"></div>
       )}
       <Link href={"/"}>
         <h1 className="font-bold text-2xl">Send it.</h1>
