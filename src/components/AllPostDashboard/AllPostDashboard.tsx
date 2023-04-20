@@ -54,7 +54,7 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
               <div className="flex items-center gap-3">
                 <Link
                   className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
-                  href={`/posts/${item?.id}`}
+                  href={`/post/${item?.id}`}
                 >
                   Reply
                 </Link>

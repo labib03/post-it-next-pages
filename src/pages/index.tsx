@@ -8,10 +8,11 @@ import {
   SplashScreen,
 } from "@/components";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
   const session = useSession();
@@ -25,6 +26,12 @@ export default function Home() {
       return axios.get("/api/posts/getPosts");
     },
   });
+
+  if (query?.isError) {
+    if (query?.error instanceof AxiosError) {
+      toast.error(query?.error?.response?.data?.message);
+    }
+  }
 
   if (session?.status?.toLowerCase() === "unauthenticated") {
     setTimeout(() => {
@@ -42,12 +49,10 @@ export default function Home() {
   return (
     <RootLayout>
       <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
-      {isLoading || query.status === "loading" || query?.isFetching ? (
-        <Skeleton total={3} />
-      ) : null}
-      {!isLoading && query.status === "success" && (
+      {isLoading || query.status === "loading" ? <Skeleton total={3} /> : null}
+      {!isLoading && query.status === "success" ? (
         <AllPost data={query?.data?.data || []} />
-      )}
+      ) : null}
     </RootLayout>
   );
 }

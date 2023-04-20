@@ -20,7 +20,6 @@ const montserrat = Montserrat({
 function AllPost({ data }: Props) {
   const [parent] = useAutoAnimate();
 
-
   return (
     <div ref={parent} className="flex flex-col gap-10 mt-10 ">
       {data.length > 0 ? (
@@ -61,7 +60,7 @@ function AllPost({ data }: Props) {
             <div className="flex items-center mt-4 gap-3">
               <Link
                 className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
-                href={`/posts/${item?.id}`}
+                href={`/post/${item?.id}`}
               >
                 Reply
               </Link>

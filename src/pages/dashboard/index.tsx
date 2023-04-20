@@ -90,13 +90,13 @@ function Dashboard() {
       {query.status === "loading" || query?.isFetching ? (
         <Skeleton total={3} />
       ) : null}
-      {query.status === "success" && (
+      {query.status === "success" && !query?.isFetching ? (
         <AllPostDashboard
           user={query?.data?.data || []}
           data={query?.data?.data?.post || []}
           deleteHandler={(payload: string) => deleteHandler(payload)}
         />
-      )}
+      ) : null}
     </RootLayout>
   );
 }
