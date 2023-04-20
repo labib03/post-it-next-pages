@@ -29,6 +29,7 @@ model Comment {
   userId    String
   postId    String
   user      User     @relation(fields: [userId], references: [id])
+  // dikasih onDelete cascade supaya pas nanti nge delete Post, si comment nya juga ikutan kehapus
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 

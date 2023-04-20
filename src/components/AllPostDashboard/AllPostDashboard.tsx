@@ -1,25 +1,19 @@
 "use client";
 
-import { Post } from "@/helpers/types";
+import { Post, User } from "@/helpers/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import moment from "moment";
-import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
   data: Post[];
+  user?: User;
+  deleteHandler: (payload: string) => void;
 };
 
-const montserrat = Montserrat({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
-
-function AllPost({ data }: Props) {
+function AllPostDashboard({ data, user, deleteHandler }: Props) {
   const [parent] = useAutoAnimate();
-
 
   return (
     <div ref={parent} className="flex flex-col gap-10 mt-10 ">
@@ -31,7 +25,7 @@ function AllPost({ data }: Props) {
           >
             <div className="flex items-center gap-2">
               <Image
-                src={item?.user?.image || ""}
+                src={user?.image || ""}
                 alt="user-image"
                 className="rounded-full"
                 width={30}
@@ -39,7 +33,7 @@ function AllPost({ data }: Props) {
               />
 
               <h2 className="text-lg tracking-wide text-gallery-950">
-                {item?.user?.name}
+                {user?.name}
               </h2>
             </div>
 
@@ -47,27 +41,38 @@ function AllPost({ data }: Props) {
               <span className="font-semibold">
                 {moment(item?.createdAt).fromNow()}
               </span>{" "}
-              - <span className="text-black">{item?.user?.email}</span>
+              - <span className="text-black">{user?.email}</span>
             </div>
 
             <div className="mt-4 w-full bg-light border-2 border-sage-200 px-4 py-2 rounded-lg">
               <pre
-                className={`${montserrat.variable} font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
+                className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
               >
                 {item?.title}
               </pre>
             </div>
 
-            <div className="flex items-center mt-4 gap-3">
-              <Link
-                className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
-                href={`/posts/${item?.id}`}
-              >
-                Reply
-              </Link>
-              <h2 className="text-sm tracking-wide">
-                {item?.comment?.length} Comment
-              </h2>
+            <div className="flex flex-row items-center justify-between mt-4">
+              <div className="flex items-center gap-3">
+                <Link
+                  className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
+                  href={`/posts/${item?.id}`}
+                >
+                  Reply
+                </Link>
+                <h2 className="text-sm tracking-wide">
+                  {item?.comment?.length} Comment
+                </h2>
+              </div>
+
+              <div>
+                <button
+                  onClick={() => deleteHandler(item?.id)}
+                  className="text-sm bg-red-200 border border-red-400 px-2 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))
@@ -80,4 +85,4 @@ function AllPost({ data }: Props) {
   );
 }
 
-export default AllPost;
+export default AllPostDashboard;

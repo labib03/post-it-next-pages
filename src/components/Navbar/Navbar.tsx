@@ -27,16 +27,18 @@ function Navbar() {
         <Loader borderColor="border-sage-400" text="Loading" />
       ) : (
         <>
-          <li className=" gap-2 hidden md:flex">
-            <Image
-              src={data?.data?.user?.image || ""}
-              width={24}
-              height={24}
-              alt="user-image"
-              className="rounded-full"
-            />
+          <li className="hidden md:flex">
+            <Link className="flex gap-2" href={"/dashboard"}>
+              <Image
+                src={data?.data?.user?.image || ""}
+                width={24}
+                height={24}
+                alt="user-image"
+                className="rounded-full"
+              />
 
-            <h1>{data?.data?.user?.name}</h1>
+              <h1>{data?.data?.user?.name}</h1>
+            </Link>
           </li>
           <li>
             <button
