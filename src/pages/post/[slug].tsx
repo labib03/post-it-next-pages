@@ -6,13 +6,14 @@ import {
   Skeleton,
 } from "@/components";
 import { Comment, User } from "@/helpers/types";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 
 type queryProps = {
   data: {
@@ -30,13 +31,39 @@ type queryProps = {
 function DetailPost() {
   const router = useRouter();
   const params = router.query;
+
   const [showModal, setShowModal] = useState(false);
   const [commentId, setCommentId] = useState("");
+
+  const queryClient = useQueryClient();
 
   const query = useQuery<queryProps>({
     queryKey: ["post-detail"],
     queryFn: () => {
       return axios.post("/api/posts/getPostByPostId", { id: params?.id });
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: () => {
+      return axios.post("/api/posts/deleteComment", { id: commentId });
+    },
+    onSuccess: () => {
+      toast.success("Comment berhasil dihapus", {
+        id: "success",
+      });
+      setShowModal(false);
+      queryClient.invalidateQueries({ queryKey: ["post-detail"] });
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        const lengthChar = err.response?.data?.message?.length || "";
+        toast.error(err?.response?.data?.message, {
+          id: "error",
+          duration: lengthChar * 100,
+        });
+        setShowModal(false);
+      }
     },
   });
 
@@ -55,8 +82,8 @@ function DetailPost() {
         <ModalConfirmation
           showModal={showModal}
           setShowModal={setShowModal}
-          onDelete={() => {}}
-          isLoading={false}
+          onDelete={() => mutation.mutate()}
+          isLoading={mutation.status === "loading"}
           type="comment"
         />
       )}

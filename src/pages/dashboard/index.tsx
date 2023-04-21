@@ -37,7 +37,6 @@ function Dashboard() {
     onSuccess: () => {
       toast.success("Post berhasil dihapus", {
         id: "success",
-        position: "top-right",
       });
       setShowModal(false);
       queryClient.invalidateQueries({ queryKey: ["posts-by-id"] });
@@ -48,7 +47,6 @@ function Dashboard() {
         toast.error(err?.response?.data?.message, {
           id: "error",
           duration: lengthChar * 100,
-          position: "top-right",
         });
         setShowModal(false);
       }

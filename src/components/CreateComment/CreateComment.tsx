@@ -41,7 +41,7 @@ function CreateComment({ postId }: Props) {
     <div className="w-auto bg-sage-100 border-2 border-sage-200 px-6 py-3 rounded-lg">
       <textarea
         placeholder="write a comment ..."
-        rows={3}
+        rows={2}
         value={inputValue}
         className="w-full px-4 py-2 bg-light shadow-md shadow-sage-100 rounded-lg border-2 border-sage-200 transition-all duration-200 focus:outline-none focus:border-light placeholder:italic"
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>

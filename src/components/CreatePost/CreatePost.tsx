@@ -21,7 +21,6 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
     onSuccess: (data) => {
       toast.success("Yeay, post berhasil dibuat", {
         id: "success",
-        position: "top-right",
       });
       setIsLoading(false);
       setInputValue("");
@@ -33,7 +32,6 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
         toast.error(err?.response?.data?.message, {
           id: "error",
           duration: lengthChar * 100,
-          position: "top-right",
         });
         setIsLoading(false);
       }
