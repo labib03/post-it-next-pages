@@ -26,7 +26,7 @@ function Dashboard() {
   const query = useQuery({
     queryKey: ["posts-by-id"],
     queryFn: () => {
-      return axios.get("/api/posts/getPostsById");
+      return axios.get("/api/posts/getPostsByUserId");
     },
   });
 
@@ -60,9 +60,6 @@ function Dashboard() {
     setPostId(payload);
   };
 
-  console.log("-- loading 1 --", mutation?.status);
-  console.log("-- loading 2 --", query?.isFetching);
-
   if (session?.status?.toLowerCase() === "unauthenticated") {
     setTimeout(() => {
       router.push({
@@ -85,6 +82,7 @@ function Dashboard() {
           setShowModal={setShowModal}
           onDelete={() => mutation.mutate()}
           isLoading={mutation?.status === "loading"}
+          type="postingan"
         />
       )}
       {query.status === "loading" || query?.isFetching ? (

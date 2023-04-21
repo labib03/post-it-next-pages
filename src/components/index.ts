@@ -4,8 +4,10 @@ import RootLayout from "./RootLayout/RootLayout";
 import SplashScreen from "./SplashScreen/SplashScreen";
 import AllPostDashboard from "./AllPostDashboard/AllPostDashboard";
 import AllPost from "./AllPost/AllPost";
+import AllComment from "./AllComment/AllComment";
 import Skeleton from "./Skeleton/Skeleton";
 import ModalConfirmation from "./ModalConfirmation/ModalConfirmation";
+import CreateComment from "./CreateComment/CreateComment";
 
 export {
   Navbar,
@@ -14,6 +16,8 @@ export {
   SplashScreen,
   AllPostDashboard,
   AllPost,
+  AllComment,
   Skeleton,
   ModalConfirmation,
+  CreateComment,
 };

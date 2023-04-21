@@ -60,7 +60,10 @@ function AllPost({ data }: Props) {
             <div className="flex items-center mt-4 gap-3">
               <Link
                 className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
-                href={`/post/${item?.id}`}
+                href={{
+                  pathname: `/post/${item?.id}`,
+                  query: { id: item?.id },
+                }}
               >
                 Reply
               </Link>

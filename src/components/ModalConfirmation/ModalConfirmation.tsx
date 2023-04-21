@@ -8,6 +8,7 @@ type Props = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
   onDelete: () => void;
   isLoading: boolean;
+  type: string;
 };
 
 function ModalConfirmation({
@@ -15,13 +16,14 @@ function ModalConfirmation({
   setShowModal,
   onDelete,
   isLoading,
+  type,
 }: Props) {
   return (
     <div className="fixed inset-0 bg-white/60 z-[999] flex items-center justify-center transition-all duration-200">
       <div className="flex flex-col gap-3 px-10 py-8 max-w-xs bg-champagne-50 rounded-xl border-2 border-champagne-100">
         <h1 className="text-xl font-semibold tracking-wide">Peringatan.</h1>
         <h1 className="text-base tracking-wide">
-          Apakah anda yakin ingin menghapus postingan ini ?
+          Apakah anda yakin ingin menghapus {type} ini ?
         </h1>
         <h1 className="text-red-500 text-xs">
           *Jika anda menghapusnya, maka tidak akan bisa dikembalikan kembali

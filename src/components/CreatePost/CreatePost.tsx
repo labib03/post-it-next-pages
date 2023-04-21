@@ -15,8 +15,8 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (payload) => {
-      return axios.post("/api/posts/addPost", payload);
+    mutationFn: () => {
+      return axios.post("/api/posts/addPost", { data: inputValue });
     },
     onSuccess: (data) => {
       toast.success("Yeay, post berhasil dibuat", {
@@ -43,7 +43,7 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
   const createPostHandler = (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    mutation.mutate({ data: inputValue });
+    mutation.mutate();
   };
 
   return (

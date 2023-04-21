@@ -17,3 +17,13 @@ export interface Post {
   user?: User;
   comment: string[];
 }
+
+export interface Comment {
+  createdAt: string;
+  id: string;
+  message: string;
+  postId: string;
+  updatedAt: string;
+  user: User;
+  userId: string;
+}
