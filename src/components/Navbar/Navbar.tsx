@@ -65,7 +65,7 @@ function Navbar() {
         <div className="fixed inset-0 bg-slate-50 opacity-50 z-50"></div>
       )}
       <Link href={"/"}>
-        <h1 className="font-bold text-2xl">Send it.</h1>
+        <h1 className="font-bold text-2xl">Post it.</h1>
       </Link>
 
       <ul className="list-none flex gap-6 items-center">

@@ -4,11 +4,13 @@ import {
   ModalConfirmation,
   RootLayout,
   Skeleton,
+  SplashScreen,
 } from "@/components";
 import { Comment, User } from "@/helpers/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import moment from "moment";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -29,6 +31,7 @@ type queryProps = {
 };
 
 function DetailPost() {
+  const session = useSession();
   const router = useRouter();
   const params = router.query;
 
@@ -73,6 +76,19 @@ function DetailPost() {
     setShowModal(!showModal);
     setCommentId(payload);
   };
+
+  if (session?.status?.toLowerCase() === "unauthenticated") {
+    setTimeout(() => {
+      router.push({
+        pathname: "/auth",
+      });
+    }, 900);
+    return <SplashScreen />;
+  }
+
+  if (session?.status === "loading") {
+    return <SplashScreen />;
+  }
 
   return (
     <RootLayout>
