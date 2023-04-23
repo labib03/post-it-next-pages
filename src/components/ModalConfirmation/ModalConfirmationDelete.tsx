@@ -11,7 +11,7 @@ type Props = {
   type: string;
 };
 
-function ModalConfirmation({
+function ModalConfirmationDelete({
   showModal,
   setShowModal,
   onDelete,
@@ -33,14 +33,14 @@ function ModalConfirmation({
           <button
             onClick={() => setShowModal(!showModal)}
             disabled={isLoading}
-            className="border-2 border-sage-300 py-2 px-4 rounded-md tracking-wide text-sm text-black transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-slate-100 disabled:border-0 disabled:text-black"
+            className="border border-sage-300 py-2 px-4 rounded-md tracking-wide text-sm text-black transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:text-black disabled:bg-stone-300 disabled:border-stone-400/50"
           >
             Kembali
           </button>
           <button
             onClick={onDelete}
             disabled={isLoading}
-            className="bg-red-400 py-2 px-4 rounded-md tracking-wide text-sm text-white transition-all duration-200 hover:bg-red-300 disabled:cursor-auto disabled:bg-slate-100 disabled:border-0 disabled:text-black"
+            className="border border-red-400 bg-red-400 py-2 px-4 rounded-md tracking-wide text-sm text-white transition-all duration-200 hover:bg-red-300 disabled:cursor-auto disabled:text-black disabled:bg-stone-300 disabled:border-stone-400/50"
           >
             {isLoading ? (
               <Loader borderColor="border-black" text="Loading" />
@@ -54,4 +54,4 @@ function ModalConfirmation({
   );
 }
 
-export default ModalConfirmation;
+export default ModalConfirmationDelete;

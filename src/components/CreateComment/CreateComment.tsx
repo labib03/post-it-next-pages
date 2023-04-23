@@ -51,7 +51,7 @@ function CreateComment({ postId }: Props) {
       <button
         onClick={submitHandler}
         disabled={mutation?.isLoading}
-        className="bg-sage-300 px-3 py-1 rounded-md border border-sage-400 mt-2 transition-all duration-200 hover:bg-sage-200 disabled:cursor-auto disabled:bg-slate-300 disabled:border-slate-300"
+        className="bg-sage-300 px-3 py-1 rounded-md border border-sage-400 mt-2 transition-all duration-200 hover:bg-sage-200 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
       >
         {mutation?.status === "loading" ? (
           <Loader borderColor="border-white" text="Loading" />

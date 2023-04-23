@@ -6,7 +6,7 @@ import AllPostDashboard from "./AllPostDashboard/AllPostDashboard";
 import AllPost from "./AllPost/AllPost";
 import AllComment from "./AllComment/AllComment";
 import Skeleton from "./Skeleton/Skeleton";
-import ModalConfirmation from "./ModalConfirmation/ModalConfirmation";
+import ModalConfirmationDelete from "./ModalConfirmation/ModalConfirmationDelete";
 import CreateComment from "./CreateComment/CreateComment";
 
 export {
@@ -18,6 +18,6 @@ export {
   AllPost,
   AllComment,
   Skeleton,
-  ModalConfirmation,
+  ModalConfirmationDelete,
   CreateComment,
 };

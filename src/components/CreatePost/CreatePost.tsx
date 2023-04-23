@@ -70,7 +70,7 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
         <button
           onClick={createPostHandler}
           disabled={mutation.isLoading}
-          className="bg-sage-200 px-4 py-1 tracking-wide rounded-md border border-sage-300 transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-sage-300"
+          className="bg-sage-200 px-4 py-1 tracking-wide rounded-md border border-sage-300 transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
         >
           <span>
             {mutation?.isLoading ? (

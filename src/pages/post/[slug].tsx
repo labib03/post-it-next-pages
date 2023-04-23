@@ -1,7 +1,7 @@
 import {
   AllComment,
   CreateComment,
-  ModalConfirmation,
+  ModalConfirmationDelete,
   RootLayout,
   Skeleton,
   SplashScreen,
@@ -95,7 +95,7 @@ function DetailPost() {
       <h1>Detail Post</h1>
 
       {showModal && (
-        <ModalConfirmation
+        <ModalConfirmationDelete
           showModal={showModal}
           setShowModal={setShowModal}
           onDelete={() => mutation.mutate()}
@@ -138,15 +138,6 @@ function DetailPost() {
           </div>
 
           <div className="flex items-center mt-4 gap-3">
-            {/* <Link
-              className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
-              href={{
-                pathname: `/post/${data?.id}`,
-                query: { id: data?.id },
-              }}
-            >
-              Reply
-            </Link> */}
             <h2 className="text-sm tracking-wide">
               {data?.comment?.length} Comment
             </h2>

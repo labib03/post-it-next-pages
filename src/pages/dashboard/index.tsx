@@ -2,7 +2,7 @@
 
 import {
   AllPostDashboard,
-  ModalConfirmation,
+  ModalConfirmationDelete,
   RootLayout,
   Skeleton,
   SplashScreen,
@@ -75,7 +75,7 @@ function Dashboard() {
     <RootLayout>
       <div>All Post in This Account</div>
       {showModal && (
-        <ModalConfirmation
+        <ModalConfirmationDelete
           showModal={showModal}
           setShowModal={setShowModal}
           onDelete={() => mutation.mutate()}
@@ -83,10 +83,9 @@ function Dashboard() {
           type="postingan"
         />
       )}
-      {query.status === "loading" || query?.isFetching ? (
+      {query.isFetching ? (
         <Skeleton total={3} />
-      ) : null}
-      {query.status === "success" && !query?.isFetching ? (
+      ) : query.status === "success" ? (
         <AllPostDashboard
           user={query?.data?.data || []}
           data={query?.data?.data?.post || []}

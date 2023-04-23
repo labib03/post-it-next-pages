@@ -1,5 +1,4 @@
 import { Post, User } from "@/helpers/types";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,10 +10,8 @@ type Props = {
 };
 
 function AllPostDashboard({ data, user, deleteHandler }: Props) {
-  const [parent] = useAutoAnimate();
-
   return (
-    <div ref={parent} className="flex flex-col gap-10 mt-10 ">
+    <div className="flex flex-col gap-10 mt-10 ">
       {data.length > 0 ? (
         data?.map((item) => (
           <div

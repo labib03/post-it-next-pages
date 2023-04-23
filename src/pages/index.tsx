@@ -49,9 +49,10 @@ export default function Home() {
   return (
     <RootLayout>
       <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
-      {isLoading || query.status === "loading" ? <Skeleton total={3} /> : null}
-      {!isLoading && query.status === "success" ? (
-        <AllPost data={query?.data?.data || []} />
+      {!query?.isFetchedAfterMount ? (
+        <Skeleton total={3} />
+      ) : query.status === "success" ? (
+        <AllPost data={query?.data?.data} />
       ) : null}
     </RootLayout>
   );
