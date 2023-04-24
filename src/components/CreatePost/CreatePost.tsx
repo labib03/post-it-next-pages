@@ -51,7 +51,7 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
         placeholder="Write something ..."
         value={inputValue}
         disabled={mutation.isLoading}
-        className="w-full bg-light border-2 px-4 py-2 border-sage-200 rounded-md transition-all duration-200 focus:border-light focus:outline-none placeholder:italic"
+        className="w-full bg-light border-2 px-4 py-2 border-sage-200 rounded-md transition-all duration-200 focus:border-light focus:outline-none"
         onChange={(e) => setInputValue(e.target.value)}
       />
 

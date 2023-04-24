@@ -21,7 +21,7 @@ function AllPost({ data }: Props) {
   const [parent] = useAutoAnimate();
 
   return (
-    <div ref={parent} className="flex flex-col gap-10 mt-10 ">
+    <div ref={parent} className="flex flex-col gap-10 mt-10">
       {data.length > 0 ? (
         data?.map((item) => (
           <div

@@ -43,7 +43,7 @@ function CreateComment({ postId }: Props) {
         placeholder="write a comment ..."
         rows={2}
         value={inputValue}
-        className="w-full px-4 py-2 bg-light shadow-md shadow-sage-100 rounded-lg border-2 border-sage-200 transition-all duration-200 focus:outline-none focus:border-light placeholder:italic"
+        className="w-full px-4 py-2 bg-light shadow-md shadow-sage-100 rounded-lg border-2 border-sage-200 transition-all duration-200 focus:outline-none focus:border-light"
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
           setInputValue(e?.target?.value)
         }

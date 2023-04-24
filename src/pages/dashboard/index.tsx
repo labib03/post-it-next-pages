@@ -84,7 +84,9 @@ function Dashboard() {
         />
       )}
       {query.isFetching ? (
-        <Skeleton total={3} />
+        <div className="flex flex-col gap-10 mt-10">
+          <Skeleton type="post" total={3} />
+        </div>
       ) : query.status === "success" ? (
         <AllPostDashboard
           user={query?.data?.data || []}

@@ -12,9 +12,8 @@ import axios, { AxiosError } from "axios";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
 
 type queryProps = {
@@ -105,7 +104,9 @@ function DetailPost() {
       )}
 
       {!query?.isFetchedAfterMount ? (
-        <Skeleton total={1} />
+        <div className="mt-8">
+          <Skeleton type="post" total={1} />
+        </div>
       ) : query?.status === "success" ? (
         <div className="w-full bg-sage-100 border-2 border-sage-200 rounded-lg shadow-lg shadow-sage-100 px-6 py-6 mt-10">
           <div className="flex items-center gap-2">
@@ -145,18 +146,21 @@ function DetailPost() {
         </div>
       ) : null}
 
-      {!query?.isFetchedAfterMount ? (
-        <Skeleton total={1} />
-      ) : query?.status === "success" ? (
-        <>
-          <div className="mt-4">
-            <CreateComment postId={params?.id} />
-          </div>
-          <div className="mt-4">
-            <AllComment data={data?.comment} deleteHandler={deleteHandler} />
-          </div>
-        </>
-      ) : null}
+      <div className="mt-4">
+        {!query?.isFetchedAfterMount ? (
+          <Skeleton type="input-comment" total={1} />
+        ) : (
+          <CreateComment postId={params?.id} />
+        )}
+      </div>
+
+      <div className="mt-4">
+        {!query?.isFetchedAfterMount ? (
+          <Skeleton type="comment" total={2} />
+        ) : query?.status === "success" ? (
+          <AllComment data={data?.comment} deleteHandler={deleteHandler} />
+        ) : null}
+      </div>
     </RootLayout>
   );
 }

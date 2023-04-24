@@ -48,9 +48,18 @@ export default function Home() {
 
   return (
     <RootLayout>
-      <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
+      <div>
+        {!query?.isFetchedAfterMount ? (
+          <Skeleton type="input-post" />
+        ) : (
+          <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
+        )}
+      </div>
+
       {!query?.isFetchedAfterMount ? (
-        <Skeleton total={3} />
+        <div className="flex flex-col gap-10 mt-10">
+          <Skeleton type="post" total={2} />
+        </div>
       ) : query.status === "success" ? (
         <AllPost data={query?.data?.data} />
       ) : null}
