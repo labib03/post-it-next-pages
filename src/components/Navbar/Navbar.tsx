@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Loader from "../Loader/Loader";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 
 function Navbar() {
   const data = useSession();
@@ -27,14 +28,14 @@ function Navbar() {
         <Loader borderColor="border-sage-400" text="Loading" />
       ) : (
         <>
-          <li>
+          <li className="md:bg-slate-100 md:px-3 md:py-2 md:rounded-full md:border md:border-slate-200/60 transition-all duration-200 md:hover:bg-slate-200/80 hover:cursor-pointer">
             <Link className="flex gap-2" href={"/dashboard"}>
               <Image
                 src={data?.data?.user?.image || ""}
-                width={24}
-                height={24}
+                width={100}
+                height={100}
                 alt="user-image"
-                className="rounded-full"
+                className="rounded-full w-9 h-9 md:w-6 md:h-6"
               />
 
               <h1 className="hidden md:flex">{data?.data?.user?.name}</h1>
@@ -43,7 +44,7 @@ function Navbar() {
           <li>
             <button
               onClick={signOutHandler}
-              className="bg-red-200 border border-red-300 px-6 py-2 text-sm rounded-lg tracking-wide transition-all duration-200 hover:bg-red-300"
+              className="bg-red-200 border border-red-300 px-6 py-2 text-sm rounded-full tracking-wide transition-all duration-200 hover:bg-red-300"
             >
               Sign Out
             </button>
@@ -60,15 +61,16 @@ function Navbar() {
     );
 
   return (
-    <nav className="flex justify-between items-center py-8">
+    <nav className="sticky top-4 z-[9999] flex justify-between items-center mt-4 mb-6 mx-4 rounded-full py-3 px-8 bg-white">
       {isLoading && (
         <div className="fixed inset-0 bg-slate-50 opacity-50 z-50"></div>
       )}
-      <Link href={"/"}>
+      <Link className="flex flex-row items-center gap-2" href={"/"}>
+        <PaperAirplaneIcon className="w-7 h-7" />
         <h1 className="font-bold text-2xl">Post it.</h1>
       </Link>
 
-      <ul className="list-none flex gap-6 items-center">
+      <ul className="list-none flex gap-4 md:gap-2 items-center">
         {data?.status === "loading" ? (
           <Loader borderColor="border-sage-300" text="Loading" />
         ) : (

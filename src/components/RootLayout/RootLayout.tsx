@@ -9,9 +9,11 @@ type Props = {
 
 function RootLayout({ children }: Props) {
   return (
-    <div className="mx-8 xl:mx-72 mb-12">
+    <div>
       <Navbar />
-      <main>{children}</main>
+      <main className="mx-8 xl:mx-72 mb-12 bg-white px-4 py-6 rounded-lg">
+        {children}
+      </main>
     </div>
   );
 }

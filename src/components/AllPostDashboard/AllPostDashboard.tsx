@@ -16,7 +16,7 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
         data?.map((item) => (
           <div
             key={item?.id}
-            className="w-full bg-sage-100 border-2 border-sage-200 rounded-lg shadow-lg shadow-sage-100 px-6 py-6"
+            className="w-full bg-sage-100 rounded-lg shadow-lg shadow-sage-100 px-6 py-6"
           >
             <div className="flex items-center gap-2">
               <Image
@@ -39,7 +39,7 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
               - <span className="text-black">{user?.email}</span>
             </div>
 
-            <div className="mt-4 w-full bg-light border-2 border-sage-200 px-4 py-2 rounded-lg">
+            <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
               <pre
                 className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
               >
@@ -50,7 +50,7 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
             <div className="flex flex-row items-center justify-between mt-4">
               <div className="flex items-center gap-3">
                 <Link
-                  className="text-sm tracking-wide inline-block bg-champagne-200 border border-champagne-300 py-1 px-2 rounded-lg transition-all duration-200 hover:bg-champagne-300"
+                  className="text-sm tracking-wide inline-block bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300"
                   href={{
                     pathname: `/post/${item?.id}`,
                     query: { id: item?.id },
@@ -66,7 +66,7 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
               <div>
                 <button
                   onClick={() => deleteHandler(item?.id)}
-                  className="text-sm bg-red-200 border border-red-400 px-2 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
+                  className="text-sm bg-red-200 px-3 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
                 >
                   Delete
                 </button>

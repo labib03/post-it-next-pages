@@ -37,7 +37,7 @@ export default function App({
             font-family: ${inter.style.fontFamily};
           }
         `}</style>
-        <Toaster />
+        <Toaster position="bottom-center" />
         {getLayout(<Component {...pageProps} />)}
       </SessionProvider>
     </QueryClientProvider>

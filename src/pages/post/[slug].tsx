@@ -91,7 +91,7 @@ function DetailPost() {
 
   return (
     <RootLayout>
-      <h1>Detail Post</h1>
+      {/* <h1>Detail Post</h1> */}
 
       {showModal && (
         <ModalConfirmationDelete
@@ -104,11 +104,9 @@ function DetailPost() {
       )}
 
       {!query?.isFetchedAfterMount ? (
-        <div className="mt-8">
-          <Skeleton type="post" total={1} />
-        </div>
+        <Skeleton type="post" total={1} />
       ) : query?.status === "success" ? (
-        <div className="w-full bg-sage-100 border-2 border-sage-200 rounded-lg shadow-lg shadow-sage-100 px-6 py-6 mt-10">
+        <div className="w-full bg-sage-100 rounded-lg shadow-lg shadow-sage-100 px-6 py-6">
           <div className="flex items-center gap-2">
             <Image
               src={data?.user?.image || ""}
@@ -130,7 +128,7 @@ function DetailPost() {
             - <span className="text-black">{data?.user?.email}</span>
           </div>
 
-          <div className="mt-4 w-full bg-light border-2 border-sage-200 px-4 py-2 rounded-lg">
+          <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
             <pre
               className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
             >
@@ -138,7 +136,7 @@ function DetailPost() {
             </pre>
           </div>
 
-          <div className="flex items-center mt-4 gap-3">
+          <div className="flex items-center mt-4 ml-1 gap-3">
             <h2 className="text-sm tracking-wide">
               {data?.comment?.length} Comment
             </h2>

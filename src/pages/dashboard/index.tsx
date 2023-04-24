@@ -73,7 +73,11 @@ function Dashboard() {
 
   return (
     <RootLayout>
-      <div>All Post in This Account</div>
+      <div className="w-full text-center">
+        <h1 className="font-semibold text-lg tracking-wide">
+          All Post in This Account
+        </h1>
+      </div>
       {showModal && (
         <ModalConfirmationDelete
           showModal={showModal}

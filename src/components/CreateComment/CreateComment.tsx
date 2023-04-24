@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Loader from "../Loader/Loader";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
+import Loader from "../Loader/Loader";
+import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 
 type Props = {
   postId?: string | string[] | undefined;
@@ -10,6 +11,9 @@ type Props = {
 
 function CreateComment({ postId }: Props) {
   const [inputValue, setInputValue] = useState("");
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useAutosizeTextArea(textAreaRef.current, inputValue);
 
   const client = useQueryClient();
 
@@ -38,20 +42,21 @@ function CreateComment({ postId }: Props) {
   };
 
   return (
-    <div className="w-auto bg-sage-100 border-2 border-sage-200 px-6 py-3 rounded-lg">
+    <div className="w-auto bg-sage-100 px-6 py-3 rounded-lg">
       <textarea
         placeholder="write a comment ..."
-        rows={2}
+        ref={textAreaRef}
+        rows={1}
         value={inputValue}
-        className="w-full px-4 py-2 bg-light shadow-md shadow-sage-100 rounded-lg border-2 border-sage-200 transition-all duration-200 focus:outline-none focus:border-light"
-        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-          setInputValue(e?.target?.value)
-        }
+        className={`w-full px-4 py-2 leading-6 bg-light shadow-md shadow-sage-100 rounded-lg resize-none outline-none border-none`}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+          setInputValue(e?.target?.value);
+        }}
       />
       <button
         onClick={submitHandler}
         disabled={mutation?.isLoading}
-        className="bg-sage-300 px-3 py-1 rounded-md border border-sage-400 mt-2 transition-all duration-200 hover:bg-sage-200 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
+        className="text-sm bg-sage-200 px-3 py-1 rounded-md mt-2 transition-all duration-200 hover:bg-sage-200 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
       >
         {mutation?.status === "loading" ? (
           <Loader borderColor="border-white" text="Loading" />
