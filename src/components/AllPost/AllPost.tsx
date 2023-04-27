@@ -62,7 +62,7 @@ function AllPost({ data }: Props) {
                 className="text-sm tracking-wide inline-block bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300/80"
                 href={{
                   pathname: `/post/${item?.id}`,
-                  query: { id: item?.id },
+                  // query: { id: item?.id },
                 }}
               >
                 Reply

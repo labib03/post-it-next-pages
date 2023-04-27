@@ -28,6 +28,21 @@ function Dashboard() {
     queryFn: () => {
       return axios.get("/api/posts/getPostsByUserId");
     },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err?.response?.status === 400) {
+          const lengthChar = err.response?.data?.message?.length || 5;
+          toast.error(err?.response?.data?.message, {
+            duration: lengthChar * 100,
+          });
+        } else {
+          const lengthChar = err?.response?.statusText?.length || 5;
+          toast.error(err?.response?.statusText, {
+            duration: lengthChar * 100,
+          });
+        }
+      }
+    },
   });
 
   const mutation = useMutation({
@@ -97,7 +112,15 @@ function Dashboard() {
           data={query?.data?.data?.post || []}
           deleteHandler={(payload: string) => deleteHandler(payload)}
         />
-      ) : null}
+      ) : query?.isLoading ? (
+        <div className="flex flex-col gap-10 mt-10">
+          <Skeleton type="post" total={2} />
+        </div>
+      ) : (
+        <h2 className="bg-red-200 text-center py-4 mt-10">
+          Something went wrong :({" "}
+        </h2>
+      )}
     </RootLayout>
   );
 }

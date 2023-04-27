@@ -42,13 +42,13 @@ function CreateComment({ postId }: Props) {
   };
 
   return (
-    <div className="w-auto bg-sage-100 px-6 py-3 rounded-lg">
+    <div className="w-auto bg-sage-100 px-6 py-3 rounded-xl">
       <textarea
         placeholder="write a comment ..."
         ref={textAreaRef}
         rows={1}
         value={inputValue}
-        className={`w-full px-4 py-2 leading-6 bg-light shadow-md shadow-sage-100 rounded-lg resize-none outline-none border-none`}
+        className={`w-full px-4 py-2 leading-6 bg-light shadow-md shadow-sage-100 rounded-xl resize-none outline-none border-none`}
         onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
           setInputValue(e?.target?.value);
         }}

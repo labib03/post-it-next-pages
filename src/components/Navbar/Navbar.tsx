@@ -61,7 +61,7 @@ function Navbar() {
     );
 
   return (
-    <nav className="sticky top-4 z-[9999] flex justify-between items-center mt-4 mb-6 mx-4 rounded-full py-3 px-8 bg-white">
+    <nav className="sticky top-4 z-[9999] flex justify-between items-center mt-4 mb-6 mx-4 rounded-full py-3 px-8 bg-white/50 backdrop-blur-sm">
       {isLoading && (
         <div className="fixed inset-0 bg-slate-50 opacity-50 z-50"></div>
       )}
