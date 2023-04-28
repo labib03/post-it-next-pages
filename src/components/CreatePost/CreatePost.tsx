@@ -1,8 +1,9 @@
+import { PaperAirplaneIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import Loader from "../Loader/Loader";
 import { toast } from "react-hot-toast";
+import Loader from "../Loader/Loader";
 
 type Props = {
   isLoading: boolean;
@@ -72,11 +73,14 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
           disabled={mutation.isLoading}
           className="bg-sage-200 px-4 py-2 tracking-wide rounded-md text-sm transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
         >
-          <span>
+          <span className="flex flex-row items-center gap-2">
             {mutation?.isLoading ? (
               <Loader borderColor="border-white" text="Loading" />
             ) : (
-              "Create a post"
+              <>
+                <PaperAirplaneIcon className="w-5" />
+                <span>Create a post</span>
+              </>
             )}
           </span>
         </button>

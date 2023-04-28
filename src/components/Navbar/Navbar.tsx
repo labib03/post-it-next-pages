@@ -6,7 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Loader from "../Loader/Loader";
-import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowLeftOnRectangleIcon,
+  PaperAirplaneIcon,
+} from "@heroicons/react/24/outline";
 
 function Navbar() {
   const data = useSession();
@@ -44,8 +47,11 @@ function Navbar() {
           <li>
             <button
               onClick={signOutHandler}
-              className="bg-red-200 border border-red-300 px-6 py-2 text-sm rounded-full tracking-wide transition-all duration-200 hover:bg-red-300"
+              className="flex flex-row items-center gap-2 bg-red-200 border border-red-300 px-5 py-2 text-sm rounded-full tracking-wide transition-all duration-200 hover:bg-red-300"
             >
+              <span>
+                <ArrowLeftOnRectangleIcon className="w-5" />
+              </span>
               Sign Out
             </button>
           </li>

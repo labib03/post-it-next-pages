@@ -1,9 +1,10 @@
+import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
+import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import Loader from "../Loader/Loader";
-import useAutosizeTextArea from "@/hooks/useAutosizeTextArea";
 
 type Props = {
   postId?: string | string[] | undefined;
@@ -56,12 +57,17 @@ function CreateComment({ postId }: Props) {
       <button
         onClick={submitHandler}
         disabled={mutation?.isLoading}
-        className="text-sm bg-sage-200 px-3 py-1 rounded-md mt-2 transition-all duration-200 hover:bg-sage-200 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
+        className="flex items-center gap-1 text-sm bg-sage-200 px-3 py-1 rounded-md mt-2 transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
       >
         {mutation?.status === "loading" ? (
           <Loader borderColor="border-white" text="Loading" />
         ) : (
-          "Post a comment"
+          <>
+            <span>
+              <ChatBubbleLeftEllipsisIcon className="w-4" />
+            </span>
+            Comment
+          </>
         )}
       </button>
     </div>

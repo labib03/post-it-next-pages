@@ -8,10 +8,11 @@ import {
   SplashScreen,
 } from "@/components";
 import { Comment, User } from "@/helpers/types";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import moment from "moment";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -178,8 +179,9 @@ function DetailPost() {
               </div>
 
               <div className="flex items-center mt-4 ml-1 gap-3">
-                <h2 className="text-sm tracking-wide">
-                  {data?.comment?.length} Comment
+                <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
+                  <span>{data?.comment?.length}</span>
+                  <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
                 </h2>
               </div>
             </div>

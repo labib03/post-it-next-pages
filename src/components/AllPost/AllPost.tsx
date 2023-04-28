@@ -2,8 +2,9 @@
 
 import { Post } from "@/helpers/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 import moment from "moment";
-import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
 import NoDataComponent from "../NoDataComponent/NoDataComponent";
@@ -11,12 +12,6 @@ import NoDataComponent from "../NoDataComponent/NoDataComponent";
 type Props = {
   data: Post[];
 };
-
-const montserrat = Montserrat({
-  weight: ["400", "500"],
-  subsets: ["latin"],
-  variable: "--font-montserrat",
-});
 
 function AllPost({ data }: Props) {
   const [parent] = useAutoAnimate();
@@ -52,7 +47,7 @@ function AllPost({ data }: Props) {
 
             <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
               <pre
-                className={`${montserrat.variable} font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
+                className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
               >
                 {item?.title}
               </pre>
@@ -60,16 +55,22 @@ function AllPost({ data }: Props) {
 
             <div className="flex items-center mt-4 gap-3">
               <Link
-                className="text-sm tracking-wide inline-block bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300/80"
+                className="flex flex-row items-center gap-1.5 text-sm tracking-wide bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300/80"
                 href={{
                   pathname: `/post/${item?.id}`,
                   // query: { id: item?.id },
                 }}
               >
+                <span>
+                  <ArrowUturnLeftIcon className="w-4" />
+                </span>
                 Reply
               </Link>
-              <h2 className="text-sm tracking-wide">
-                {item?.comment?.length} Comment
+              <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
+                {item?.comment?.length}
+                <span>
+                  <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+                </span>
               </h2>
             </div>
           </div>

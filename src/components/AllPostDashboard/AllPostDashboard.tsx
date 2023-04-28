@@ -1,8 +1,10 @@
 import { Post, User } from "@/helpers/types";
+import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import NoDataComponent from "../NoDataComponent/NoDataComponent";
+import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   data: Post[];
@@ -51,24 +53,33 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
             <div className="flex flex-row items-center justify-between mt-4">
               <div className="flex items-center gap-3">
                 <Link
-                  className="text-sm tracking-wide inline-block bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300"
+                  className="flex items-center gap-1 text-sm tracking-wide bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300"
                   href={{
                     pathname: `/post/${item?.id}`,
                     query: { id: item?.id },
                   }}
                 >
+                  <span>
+                    <ArrowUturnLeftIcon className="w-4" />
+                  </span>
                   Reply
                 </Link>
-                <h2 className="text-sm tracking-wide">
-                  {item?.comment?.length} Comment
+                <h2 className="flex items-center gap-1 text-sm tracking-wide">
+                  {item?.comment?.length}
+                  <span>
+                    <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+                  </span>
                 </h2>
               </div>
 
               <div>
                 <button
                   onClick={() => deleteHandler(item?.id)}
-                  className="text-sm bg-red-200 px-3 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
+                  className="flex items-center gap-1 text-sm bg-red-200 px-3 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
                 >
+                  <span>
+                    <TrashIcon className="w-4" />
+                  </span>
                   Delete
                 </button>
               </div>
