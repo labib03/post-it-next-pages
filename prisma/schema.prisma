@@ -19,6 +19,7 @@ model Post {
   userId    String  
   user      User      @relation(fields: [userId], references: [id])
   comment   Comment[]
+  like      Like[]
 }
 
 model Comment {
@@ -26,6 +27,16 @@ model Comment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   message   String
+  userId    String
+  postId    String
+  user      User     @relation(fields: [userId], references: [id])
+  // dikasih onDelete cascade supaya pas nanti nge delete Post, si comment nya juga ikutan kehapus
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+model Like {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   userId    String
   postId    String
   user      User     @relation(fields: [userId], references: [id])
@@ -70,6 +81,7 @@ model User {
   sessions      Session[]
   post          Post[]
   comment       Comment[]
+  like          Like[]
 }
 
 model VerificationToken {
