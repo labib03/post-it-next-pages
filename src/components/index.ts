@@ -8,6 +8,7 @@ import AllComment from "./AllComment/AllComment";
 import Skeleton from "./Skeleton/Skeleton";
 import ModalConfirmationDelete from "./ModalConfirmation/ModalConfirmationDelete";
 import CreateComment from "./CreateComment/CreateComment";
+import NoDataComponent from "./NoDataComponent/NoDataComponent";
 
 export {
   Navbar,
@@ -20,4 +21,5 @@ export {
   Skeleton,
   ModalConfirmationDelete,
   CreateComment,
+  NoDataComponent,
 };

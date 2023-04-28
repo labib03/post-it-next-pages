@@ -6,6 +6,7 @@ import moment from "moment";
 import { Montserrat } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
+import NoDataComponent from "../NoDataComponent/NoDataComponent";
 
 type Props = {
   data: Post[];
@@ -74,9 +75,7 @@ function AllPost({ data }: Props) {
           </div>
         ))
       ) : (
-        <div className="bg-champagne-200 border-2 border-champagne-400 py-4 rounded-lg">
-          <h2 className="text-center">No post yet.</h2>
-        </div>
+        <NoDataComponent type="post" />
       )}
     </div>
   );

@@ -5,6 +5,7 @@ import moment from "moment";
 import "moment/locale/id";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import NoDataComponent from "../NoDataComponent/NoDataComponent";
 
 type Props = {
   data: Comment[];
@@ -58,7 +59,7 @@ function AllComment({ data, deleteHandler }: Props) {
           </div>
         ))
       ) : (
-        <h2 className="text-center mt-2 tracking-wide">No comment yet.</h2>
+        <NoDataComponent type="comment" />
       )}
     </div>
   );

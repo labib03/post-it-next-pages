@@ -45,13 +45,13 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
   };
 
   return (
-    <div className="bg-sage-100 rounded-md p-4">
+    <div className="bg-sage-100 shadow-md shadow-sage-100 rounded-md p-4">
       <textarea
         rows={4}
         placeholder="Write something ..."
         value={inputValue}
         disabled={mutation.isLoading}
-        className="w-full bg-light border-2 px-4 py-2 border-sage-200 rounded-md transition-all duration-200 focus:border-light focus:outline-none"
+        className="w-full bg-light border-2 px-4 py-2 resize-none outline-none border-sage-200 rounded-md transition-all duration-200 focus:border-sage-200 focus:outline-none"
         onChange={(e) => setInputValue(e.target.value)}
       />
 
@@ -70,7 +70,7 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
         <button
           onClick={createPostHandler}
           disabled={mutation.isLoading}
-          className="bg-sage-200 px-4 py-1 tracking-wide rounded-md border border-sage-300 transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
+          className="bg-sage-200 px-4 py-2 tracking-wide rounded-md text-sm transition-all duration-200 hover:bg-sage-300 disabled:cursor-auto disabled:bg-stone-300 disabled:border-stone-400/50"
         >
           <span>
             {mutation?.isLoading ? (
