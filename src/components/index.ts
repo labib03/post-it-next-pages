@@ -9,6 +9,7 @@ import Skeleton from "./Skeleton/Skeleton";
 import ModalConfirmationDelete from "./ModalConfirmation/ModalConfirmationDelete";
 import CreateComment from "./CreateComment/CreateComment";
 import NoDataComponent from "./NoDataComponent/NoDataComponent";
+import CustomRangeSlider from "./Custom/RangeSlider";
 
 export {
   Navbar,
@@ -22,4 +23,5 @@ export {
   ModalConfirmationDelete,
   CreateComment,
   NoDataComponent,
+  CustomRangeSlider,
 };

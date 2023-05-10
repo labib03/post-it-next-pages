@@ -8,7 +8,7 @@ import {
   SplashScreen,
 } from "@/components";
 import { Comment, User } from "@/helpers/types";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import moment from "moment";
@@ -180,8 +180,16 @@ function DetailPost() {
 
               <div className="flex items-center mt-4 ml-1 gap-3">
                 <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
-                  <span>{data?.comment?.length}</span>
                   <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+                  <span>{data?.comment?.length}</span>
+                  <span>Komentar</span>
+                </h2>
+                <h2 className="flex items-center gap-1 text-sm">
+                  <span>
+                    <HeartIcon className="w-5 text-red-400" />
+                  </span>
+                  {data?.like?.length}
+                  <span>Like</span>
                 </h2>
               </div>
             </div>

@@ -20,7 +20,10 @@ export default async function handler(
     const result = await prisma.user?.findUnique({
       where: { email: user?.email || "" },
       include: {
-        post: { orderBy: { createdAt: "desc" }, include: { comment: true } },
+        post: {
+          orderBy: { createdAt: "desc" },
+          include: { comment: true, like: true },
+        },
       },
     });
 

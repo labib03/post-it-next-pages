@@ -44,11 +44,14 @@ export default function Home() {
   });
 
   const mutation = useMutation({
-    mutationFn: (params) => {
-      return axios.post("/api/posts/addLike", params);
+    mutationFn: (payload: {
+      name: string | undefined | null;
+      postId: string;
+      type: string;
+    }) => {
+      return axios.post("/api/posts/handleLike", payload);
     },
     onSuccess: () => {
-      toast?.success("Berhasil like");
       client.invalidateQueries({ queryKey: ["posts"] });
     },
     onError: (error) => {
@@ -59,8 +62,17 @@ export default function Home() {
   });
 
   const handleLikePost = (payload: {
-    name: string | undefined;
+    name: string | undefined | null;
     postId: string;
+    type: string;
+  }) => {
+    mutation.mutate(payload);
+  };
+
+  const handleUnlikePost = (payload: {
+    name: string | undefined | null;
+    postId: string;
+    type: string;
   }) => {
     mutation.mutate(payload);
   };
@@ -93,7 +105,11 @@ export default function Home() {
           <Skeleton type="post" total={2} />
         </div>
       ) : query.status === "success" ? (
-        <AllPost data={query?.data?.data} handleLikePost={handleLikePost} />
+        <AllPost
+          data={query?.data?.data}
+          handleLikePost={handleLikePost}
+          handleUnlikePost={handleUnlikePost}
+        />
       ) : query?.isLoading ? (
         <div className="flex flex-col gap-10 mt-10">
           <Skeleton type="post" total={1} />

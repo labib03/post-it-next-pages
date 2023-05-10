@@ -8,25 +8,34 @@ import {
   ChatBubbleLeftRightIcon,
   HeartIcon as HeartSolidIcon,
 } from "@heroicons/react/24/solid";
+import { useDebouncedValue } from "@mantine/hooks";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+
+type Params = {
+  name: string | undefined | null;
+  postId: string;
+  type: string;
+};
 
 type Props = {
   item: Post;
-  handleLikePost: (params: {
-    name: string | undefined;
-    postId: string;
-  }) => void;
+  handleLikePost: (params: Params) => void;
+  handleUnlikePost: (params: Params) => void;
 };
 
-function PostComponent({ item, handleLikePost }: Props) {
+function PostComponent({ item, handleLikePost, handleUnlikePost }: Props) {
   const session = useSession();
   const [isLike, setIsLike] = useState(false);
   const [totalLike, setTotalLike] = useState(0);
+  const [fetchLikeAPI, setFetchLikeAPI] = useState({
+    like: false,
+    unlike: false,
+  });
+  const [debounced] = useDebouncedValue(isLike, 2000);
 
   useEffect(() => {
     if (item?.like) {
@@ -37,39 +46,58 @@ function PostComponent({ item, handleLikePost }: Props) {
         }
       }
     }
-  }, []);
+  }, [item?.like]);
+
+  useEffect(() => {
+    if (debounced && fetchLikeAPI?.like) {
+      handleLikePost({
+        name: session?.data?.user?.name,
+        postId: item?.id,
+        type: "LIKE",
+      });
+    }
+    if (!debounced && fetchLikeAPI?.unlike) {
+      handleUnlikePost({
+        name: session?.data?.user?.name,
+        postId: item?.id,
+        type: "UNLIKE",
+      });
+    }
+  }, [debounced]);
 
   const handleLike = () => {
     if (!isLike) {
+      setFetchLikeAPI({ like: true, unlike: false });
       setIsLike(true);
       setTotalLike((like) => like + 1);
     } else {
+      setFetchLikeAPI({ like: false, unlike: true });
       setIsLike(false);
       setTotalLike((like) => like - 1);
     }
   };
 
-  const handleLikebackup = () => {
-    if (item?.like?.length > 0) {
-      for (const key of item?.like) {
-        if (key?.name === session?.data?.user?.name) {
-          return toast.error("Akun ini sudah memberi like pada postingan ini");
-        } else {
-          setIsLike(true);
-          if (!isLike) {
-            setTotalLike((like) => like + 1);
-            handleLikePost({ name: item?.user?.name, postId: item?.id });
-          }
-        }
-      }
-    } else {
-      setIsLike(true);
-      if (!isLike) {
-        setTotalLike((like) => like + 1);
-        handleLikePost({ name: item?.user?.name, postId: item?.id });
-      }
-    }
-  };
+  // const handleLikebackup = () => {
+  //   if (item?.like?.length > 0) {
+  //     for (const key of item?.like) {
+  //       if (key?.name === session?.data?.user?.name) {
+  //         return toast.error("Akun ini sudah memberi like pada postingan ini");
+  //       } else {
+  //         setIsLike(true);
+  //         if (!isLike) {
+  //           setTotalLike((like) => like + 1);
+  //           handleLikePost({ name: item?.user?.name, postId: item?.id });
+  //         }
+  //       }
+  //     }
+  //   } else {
+  //     setIsLike(true);
+  //     if (!isLike) {
+  //       setTotalLike((like) => like + 1);
+  //       handleLikePost({ name: item?.user?.name, postId: item?.id });
+  //     }
+  //   }
+  // };
 
   return (
     <div

@@ -24,6 +24,16 @@ export default async function handler(
     },
   });
 
+  // get like
+  const like = await prisma?.like?.findMany({
+    where: { postId: payload?.postId },
+  });
+
+  // check if user was give a like or not
+  const isLike = like?.find(
+    (like) => like?.postId === payload?.postId && like?.name === payload?.name
+  );
+
   // validate payload
   // if (payload.message > 400) {
   //   return res.status(403).json({
@@ -39,14 +49,23 @@ export default async function handler(
 
   // create a post
   try {
-    const result = await prisma.like.create({
-      data: {
-        name: payload?.name,
-        userId: user?.id,
-        postId: payload?.postId,
-      },
-    });
-    return res.status(200).json(result);
+    if (isLike) {
+      const result = await prisma?.like?.delete({
+        where: {
+          id: isLike?.id,
+        },
+      });
+      return res.status(200).json({ result });
+    } else {
+      const result = await prisma.like.create({
+        data: {
+          name: payload?.name,
+          userId: user?.id,
+          postId: payload?.postId,
+        },
+      });
+      return res.status(200).json({ result });
+    }
   } catch (error) {
     return res.status(400).json({ message: "error while add a post" });
   }

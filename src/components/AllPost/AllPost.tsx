@@ -6,16 +6,18 @@ import NoDataComponent from "../NoDataComponent/NoDataComponent";
 import PostComponent from "../PostComponent/PostComponent";
 
 type Params = {
-  name: string | undefined;
+  name: string | undefined | null;
   postId: string;
+  type: string;
 };
 
 type Props = {
   data: Post[];
   handleLikePost: (params: Params) => void;
+  handleUnlikePost: (params: Params) => void;
 };
 
-function AllPost({ data, handleLikePost }: Props) {
+function AllPost({ data, handleLikePost, handleUnlikePost }: Props) {
   const [parent] = useAutoAnimate();
 
   return (
@@ -26,6 +28,7 @@ function AllPost({ data, handleLikePost }: Props) {
             key={item?.id}
             item={item}
             handleLikePost={handleLikePost}
+            handleUnlikePost={handleUnlikePost}
           />
         ))
       ) : (

@@ -4,7 +4,7 @@ import moment from "moment";
 import Image from "next/image";
 import Link from "next/link";
 import NoDataComponent from "../NoDataComponent/NoDataComponent";
-import { ChatBubbleLeftRightIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   data: Post[];
@@ -65,10 +65,18 @@ function AllPostDashboard({ data, user, deleteHandler }: Props) {
                   Reply
                 </Link>
                 <h2 className="flex items-center gap-1 text-sm tracking-wide">
-                  {item?.comment?.length}
                   <span>
                     <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
                   </span>
+                  {item?.comment?.length}
+                  <span>Komentar</span>
+                </h2>
+                <h2 className="flex items-center gap-1 text-sm">
+                  <span>
+                    <HeartIcon className="w-5 text-red-400" />
+                  </span>
+                  {item?.like?.length}
+                  <span>Like</span>
                 </h2>
               </div>
 
