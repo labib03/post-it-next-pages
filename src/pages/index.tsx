@@ -7,7 +7,7 @@ import {
   Skeleton,
   SplashScreen,
 } from "@/components";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -17,6 +17,7 @@ import { toast } from "react-hot-toast";
 export default function Home() {
   const session = useSession();
   const router = useRouter();
+  const client = useQueryClient();
 
   const [isLoading, setIsloading] = useState(false);
 
@@ -41,6 +42,28 @@ export default function Home() {
       }
     },
   });
+
+  const mutation = useMutation({
+    mutationFn: (params) => {
+      return axios.post("/api/posts/addLike", params);
+    },
+    onSuccess: () => {
+      toast?.success("Berhasil like");
+      client.invalidateQueries({ queryKey: ["posts"] });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        toast.error(error?.response?.data?.message);
+      }
+    },
+  });
+
+  const handleLikePost = (payload: {
+    name: string | undefined;
+    postId: string;
+  }) => {
+    mutation.mutate(payload);
+  };
 
   if (session?.status?.toLowerCase() === "unauthenticated") {
     setTimeout(() => {
@@ -70,7 +93,7 @@ export default function Home() {
           <Skeleton type="post" total={2} />
         </div>
       ) : query.status === "success" ? (
-        <AllPost data={query?.data?.data} />
+        <AllPost data={query?.data?.data} handleLikePost={handleLikePost} />
       ) : query?.isLoading ? (
         <div className="flex flex-col gap-10 mt-10">
           <Skeleton type="post" total={1} />

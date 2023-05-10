@@ -16,6 +16,7 @@ export interface Post {
   userId: string;
   user?: User;
   comment: string[];
+  like: Like[];
 }
 
 export interface Comment {
@@ -24,6 +25,15 @@ export interface Comment {
   message: string;
   postId: string;
   updatedAt: string;
+  user: User;
+  userId: string;
+}
+export interface Like {
+  createdAt: string;
+  id: string;
+  postId: string;
+  updatedAt: string;
+  name?: string;
   user: User;
   userId: string;
 }

@@ -32,7 +32,7 @@ function AllComment({ data, deleteHandler }: Props) {
 
               <div className="flex-1">
                 <div className="flex gap-2 items-center">
-                  <h2 className="text-sm tracking-wide font-bold">
+                  <h2 className="text-sm tracking-wide font-semibold">
                     {item?.user?.name}
                   </h2>
                 </div>
