@@ -108,8 +108,7 @@ function Dashboard() {
         </div>
       ) : query.status === "success" ? (
         <AllPostDashboard
-          user={query?.data?.data || []}
-          data={query?.data?.data?.post || []}
+          data={query?.data?.data || []}
           deleteHandler={(payload: string) => deleteHandler(payload)}
         />
       ) : query?.isLoading ? (

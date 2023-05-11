@@ -7,6 +7,8 @@ import {
   Skeleton,
   SplashScreen,
 } from "@/components";
+import PostComponent from "@/components/PostComponent/PostComponent";
+import FetchLikePost from "@/handler/fetchLikePost";
 import { Comment, User } from "@/helpers/types";
 import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -56,6 +58,8 @@ function DetailPost() {
   const [commentId, setCommentId] = useState("");
 
   const queryClient = useQueryClient();
+
+  const { handleLikePost, handleUnlikePost } = FetchLikePost();
 
   const query = useQuery({
     queryKey: ["post-detail"],
@@ -148,52 +152,58 @@ function DetailPost() {
           {!query?.isFetchedAfterMount ? (
             <Skeleton type="post" total={1} />
           ) : query?.status === "success" ? (
-            <div className="w-full bg-sage-100 rounded-lg shadow-lg shadow-sage-100 px-6 py-6">
-              <div className="flex items-center gap-2">
-                <Image
-                  src={data?.user?.image || ""}
-                  alt="user-image"
-                  className="rounded-full"
-                  width={30}
-                  height={30}
-                />
+            <PostComponent
+              item={data}
+              disabledCommentButton
+              handleLikePost={handleLikePost}
+              handleUnlikePost={handleUnlikePost}
+            />
+          ) : // <div className="w-full bg-sage-100 rounded-lg shadow-lg shadow-sage-100 px-6 py-6">
+          //   <div className="flex items-center gap-2">
+          //     <Image
+          //       src={data?.user?.image || ""}
+          //       alt="user-image"
+          //       className="rounded-full"
+          //       width={30}
+          //       height={30}
+          //     />
 
-                <h2 className="text-lg tracking-wide text-gallery-950">
-                  {data?.user?.name}
-                </h2>
-              </div>
+          //     <h2 className="text-lg tracking-wide text-gallery-950">
+          //       {data?.user?.name}
+          //     </h2>
+          //   </div>
 
-              <div className="text-xs tracking-wide mt-3 text-slate-500">
-                <span className="font-semibold">
-                  {moment(data?.createdAt).fromNow()}
-                </span>{" "}
-                - <span className="text-black">{data?.user?.email}</span>
-              </div>
+          //   <div className="text-xs tracking-wide mt-3 text-slate-500">
+          //     <span className="font-semibold">
+          //       {moment(data?.createdAt).fromNow()}
+          //     </span>{" "}
+          //     - <span className="text-black">{data?.user?.email}</span>
+          //   </div>
 
-              <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
-                <pre
-                  className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
-                >
-                  {data?.title}
-                </pre>
-              </div>
+          //   <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
+          //     <pre
+          //       className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
+          //     >
+          //       {data?.title}
+          //     </pre>
+          //   </div>
 
-              <div className="flex items-center mt-4 ml-1 gap-3">
-                <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
-                  <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
-                  <span>{data?.comment?.length}</span>
-                  <span>Komentar</span>
-                </h2>
-                <h2 className="flex items-center gap-1 text-sm">
-                  <span>
-                    <HeartIcon className="w-5 text-red-400" />
-                  </span>
-                  {data?.like?.length}
-                  <span>Like</span>
-                </h2>
-              </div>
-            </div>
-          ) : null}
+          //   <div className="flex items-center mt-4 ml-1 gap-3">
+          //     <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
+          //       <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+          //       <span>{data?.comment?.length}</span>
+          //       <span>Komentar</span>
+          //     </h2>
+          //     <h2 className="flex items-center gap-1 text-sm">
+          //       <span>
+          //         <HeartIcon className="w-5 text-red-400" />
+          //       </span>
+          //       {data?.like?.length}
+          //       <span>Like</span>
+          //     </h2>
+          //   </div>
+          // </div>
+          null}
           <div className="mt-4">
             {!query?.isFetchedAfterMount ? (
               <Skeleton type="input-comment" total={1} />

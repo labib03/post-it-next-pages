@@ -17,13 +17,13 @@ export default async function handler(
 
   // get a post by user id
   try {
-    const result = await prisma.user?.findUnique({
-      where: { email: user?.email || "" },
+    const result = await prisma.post?.findMany({
+      where: { userId: user?.id || "" },
+      orderBy: { createdAt: "desc" },
       include: {
-        post: {
-          orderBy: { createdAt: "desc" },
-          include: { comment: true, like: true },
-        },
+        user: true,
+        like: true,
+        comment: { orderBy: { createdAt: "desc" }, include: { user: true } },
       },
     });
 

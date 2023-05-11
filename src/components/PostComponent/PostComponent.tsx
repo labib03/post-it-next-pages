@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Post } from "@/helpers/types";
 import {
-  ArrowUturnLeftIcon,
   HeartIcon as HeartOutlineIcon,
+  TrashIcon,
 } from "@heroicons/react/24/outline";
 import {
   ChatBubbleLeftRightIcon,
@@ -23,11 +23,23 @@ type Params = {
 
 type Props = {
   item: Post;
-  handleLikePost: (params: Params) => void;
-  handleUnlikePost: (params: Params) => void;
+  disabledCommentButton?: boolean;
+  disabledLikeButton?: boolean;
+  withDeleteButton?: boolean;
+  handleLikePost?: (params: Params) => void;
+  handleUnlikePost?: (params: Params) => void;
+  deleteHandler?: (payload: string) => void;
 };
 
-function PostComponent({ item, handleLikePost, handleUnlikePost }: Props) {
+function PostComponent({
+  item,
+  disabledCommentButton,
+  disabledLikeButton,
+  withDeleteButton,
+  handleLikePost = () => {},
+  handleUnlikePost = () => {},
+  deleteHandler = () => {},
+}: Props) {
   const session = useSession();
   const [isLike, setIsLike] = useState(false);
   const [totalLike, setTotalLike] = useState(0);
@@ -38,6 +50,7 @@ function PostComponent({ item, handleLikePost, handleUnlikePost }: Props) {
   const [debounced] = useDebouncedValue(isLike, 2000);
 
   useEffect(() => {
+    setIsLike(false);
     if (item?.like) {
       setTotalLike(item?.like?.length);
       for (const key of item?.like) {
@@ -104,25 +117,25 @@ function PostComponent({ item, handleLikePost, handleUnlikePost }: Props) {
       key={item?.id}
       className="w-full bg-sage-100/80 rounded-lg shadow-lg shadow-sage-100 px-6 py-6"
     >
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-7">
         <Image
           src={item?.user?.image || ""}
           alt="user-image"
           className="rounded-full"
-          width={30}
-          height={30}
+          width={42}
+          height={42}
         />
 
-        <h2 className="text-lg tracking-wide text-gallery-950">
-          {item?.user?.name}
-        </h2>
-      </div>
+        <div className="flex flex-col">
+          <h2 className="text-lg font-semibold tracking-wide text-gallery-950">
+            {item?.user?.name}
+          </h2>
 
-      <div className="text-xs tracking-wide mt-3 text-slate-500">
-        <span className="font-semibold">
-          {moment(item?.createdAt).fromNow()}
-        </span>{" "}
-        - <span className="text-black">{item?.user?.email}</span>
+          <p className="text-xs tracking-wide text-slate-500 flex items-center">
+            {moment(item?.createdAt).format("Do MMMM YYYY")} -{" "}
+            {moment(item?.createdAt).fromNow()}
+          </p>
+        </div>
       </div>
 
       <div className="mt-4 w-full bg-light/60 px-4 py-2 rounded-lg">
@@ -133,41 +146,91 @@ function PostComponent({ item, handleLikePost, handleUnlikePost }: Props) {
         </pre>
       </div>
 
-      <div className="flex items-center mt-4 gap-3">
-        <Link
-          className="flex flex-row items-center gap-1.5 text-sm tracking-wide bg-champagne-200/90 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-champagne-300/80"
-          href={{
-            pathname: `/post/${item?.id}`,
-            // query: { id: item?.id },
-          }}
-        >
-          <span>
-            <ArrowUturnLeftIcon className="w-4" />
-          </span>
-          Reply
-        </Link>
+      <div className="flex flex-row justify-between items-center mt-4 ml-1">
+        <div className="flex items-center gap-3">
+          {disabledCommentButton ? (
+            <button
+              disabled={true}
+              className="flex items-center gap-1.5 text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg"
+            >
+              <span>
+                <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+              </span>
+              {item?.comment?.length}
+              <span>Komentar</span>
+            </button>
+          ) : (
+            <button
+              disabled={true}
+              className="text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-sage-300/80 disabled:cursor-auto"
+            >
+              <Link
+                className="flex items-center gap-1.5"
+                href={{
+                  pathname: `/post/${item?.id}`,
+                }}
+              >
+                <span>
+                  <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
+                </span>
+                {item?.comment?.length}
+                <span>Komentar</span>
+              </Link>
+            </button>
+          )}
 
-        <h2 className="flex flex-row items-center gap-1 text-sm tracking-wide">
-          {item?.comment?.length}
-          <span>
-            <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
-          </span>
-        </h2>
-
-        <div className="hover:cursor-pointer" onClick={handleLike}>
-          <h2 className="flex items-center gap-1 text-sm">
-            {totalLike}
-            {isLike ? (
+          {disabledLikeButton ? (
+            <button
+              disabled={true}
+              className="flex items-center gap-1.5 text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg"
+            >
               <span>
                 <HeartSolidIcon className="w-5 text-red-400" />
               </span>
-            ) : (
-              <span>
-                <HeartOutlineIcon className="w-5" />
-              </span>
-            )}
-          </h2>
+              {item?.like?.length}
+              <span>Like</span>
+            </button>
+          ) : (
+            <div
+              className="bg-sage-100 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-red-300/80 hover:cursor-pointer"
+              onClick={handleLike}
+            >
+              <div>
+                {isLike ? (
+                  <h2 className="flex items-center gap-1 text-sm">
+                    <span>
+                      <HeartSolidIcon className="w-5 text-red-400" />
+                    </span>
+                    {totalLike}
+                    <span>Like</span>
+                  </h2>
+                ) : (
+                  <h2 className="flex items-center gap-1 text-sm">
+                    <span>
+                      <HeartOutlineIcon className="w-5" />
+                    </span>
+                    {totalLike}
+                    <span>Like</span>
+                  </h2>
+                )}
+              </div>
+            </div>
+          )}
         </div>
+
+        {withDeleteButton && (
+          <div>
+            <button
+              onClick={() => deleteHandler(item?.id)}
+              className="flex items-center gap-1 text-sm bg-red-200 px-3 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
+            >
+              <span>
+                <TrashIcon className="w-4" />
+              </span>
+              Delete
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

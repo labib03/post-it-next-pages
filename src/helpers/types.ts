@@ -4,7 +4,7 @@ export interface User {
   id: string;
   image: string;
   name: string;
-  post?: Post[];
+  post?: Post[] | undefined;
 }
 
 export interface Post {
@@ -14,9 +14,9 @@ export interface Post {
   title: string;
   updatedAt: string;
   userId: string;
-  user?: User;
-  comment: string[];
-  like: Like[];
+  user?: User | undefined;
+  comment?: string[] | undefined;
+  like?: Like[] | undefined;
 }
 
 export interface Comment {
