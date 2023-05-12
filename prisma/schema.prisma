@@ -17,7 +17,7 @@ model Post {
   title     String  
   published Boolean   @default(false)
   userId    String  
-  user      User      @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment   Comment[]
   like      Like[]
 }
@@ -29,7 +29,7 @@ model Comment {
   message   String
   userId    String
   postId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   // dikasih onDelete cascade supaya pas nanti nge delete Post, si comment nya juga ikutan kehapus
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
@@ -40,7 +40,7 @@ model Like {
   name      String
   userId    String
   postId    String
-  user      User     @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   // dikasih onDelete cascade supaya pas nanti nge delete Post, si comment nya juga ikutan kehapus
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
@@ -74,6 +74,7 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
+  createdAt     DateTime  @default(now())
   name          String?
   email         String?   @unique
   emailVerified DateTime?

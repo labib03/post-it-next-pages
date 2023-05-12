@@ -10,6 +10,7 @@ import ModalConfirmationDelete from "./ModalConfirmation/ModalConfirmationDelete
 import CreateComment from "./CreateComment/CreateComment";
 import NoDataComponent from "./NoDataComponent/NoDataComponent";
 import CustomRangeSlider from "./Custom/RangeSlider";
+import ListUserComponent from "./ListUserComponent/ListUserComponent";
 
 export {
   Navbar,
@@ -24,4 +25,5 @@ export {
   CreateComment,
   NoDataComponent,
   CustomRangeSlider,
+  ListUserComponent,
 };

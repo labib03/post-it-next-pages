@@ -218,7 +218,7 @@ function PostComponent({
                 color: "black",
                 backgroundColor: "#e4e4e4",
               }}
-              label={changeIndexPosition(userPostLike)?.join(", ")}
+              label={getUsersLike()}
               position="bottom-start"
             >
               <div className="flex items-center gap-1.5 text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg">
