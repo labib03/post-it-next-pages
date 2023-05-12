@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Post } from "@/helpers/types";
+import { Like, Post } from "@/helpers/types";
 import {
   HeartIcon as HeartOutlineIcon,
   TrashIcon,
@@ -8,12 +8,13 @@ import {
   ChatBubbleLeftRightIcon,
   HeartIcon as HeartSolidIcon,
 } from "@heroicons/react/24/solid";
+import { Tooltip } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import moment from "moment";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 
 type Params = {
   name: string | undefined | null;
@@ -41,13 +42,34 @@ function PostComponent({
   deleteHandler = () => {},
 }: Props) {
   const session = useSession();
+
   const [isLike, setIsLike] = useState(false);
   const [totalLike, setTotalLike] = useState(0);
   const [fetchLikeAPI, setFetchLikeAPI] = useState({
     like: false,
     unlike: false,
   });
+  const [userPostLike, setUserPostLike] = useState<
+    (string | undefined)[] | undefined
+  >([]);
+
   const [debounced] = useDebouncedValue(isLike, 2000);
+
+  const changeIndexPosition = (
+    arr: (string | undefined)[] | undefined = []
+  ) => {
+    if (arr?.length !== 0) {
+      const findIndexYou = arr?.findIndex((item) => item === "You");
+      const toIndex = 0;
+
+      const element = arr?.splice(findIndexYou, 1)[0];
+      arr?.splice(toIndex, 0, element);
+
+      return arr;
+    }
+
+    return [];
+  };
 
   useEffect(() => {
     setIsLike(false);
@@ -78,39 +100,49 @@ function PostComponent({
     }
   }, [debounced]);
 
+  useEffect(() => {
+    const likePerson = item?.like?.map((item: Like) =>
+      item.name === session.data?.user?.name ? "You" : item.name
+    );
+
+    setUserPostLike(likePerson);
+  }, [item?.like]);
+
   const handleLike = () => {
     if (!isLike) {
       setFetchLikeAPI({ like: true, unlike: false });
       setIsLike(true);
       setTotalLike((like) => like + 1);
+
+      setUserPostLike((prev: any) => ["You", ...prev]);
     } else {
       setFetchLikeAPI({ like: false, unlike: true });
       setIsLike(false);
       setTotalLike((like) => like - 1);
+
+      const filterUserLike = userPostLike?.filter(
+        (user: any) => user !== "You"
+      );
+      setUserPostLike(filterUserLike);
     }
   };
 
-  // const handleLikebackup = () => {
-  //   if (item?.like?.length > 0) {
-  //     for (const key of item?.like) {
-  //       if (key?.name === session?.data?.user?.name) {
-  //         return toast.error("Akun ini sudah memberi like pada postingan ini");
-  //       } else {
-  //         setIsLike(true);
-  //         if (!isLike) {
-  //           setTotalLike((like) => like + 1);
-  //           handleLikePost({ name: item?.user?.name, postId: item?.id });
-  //         }
-  //       }
-  //     }
-  //   } else {
-  //     setIsLike(true);
-  //     if (!isLike) {
-  //       setTotalLike((like) => like + 1);
-  //       handleLikePost({ name: item?.user?.name, postId: item?.id });
-  //     }
-  //   }
-  // };
+  const getUsersLike = () => {
+    const data = changeIndexPosition(userPostLike);
+
+    if (data?.length === 0) {
+      return `Belum ada like pada postingan ini`;
+    }
+
+    const secondMessage =
+      data?.slice(2, data?.length).length === 0
+        ? ""
+        : ` dan ${data?.slice(2, data?.length).length} orang menyukai post ini`;
+
+    const message = `${data?.slice(0, 2).join(", ")} ${secondMessage}`;
+
+    return message;
+  };
 
   return (
     <div
@@ -180,41 +212,58 @@ function PostComponent({
           )}
 
           {disabledLikeButton ? (
-            <button
-              disabled={true}
-              className="flex items-center gap-1.5 text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg"
+            <Tooltip
+              withArrow
+              sx={{
+                color: "black",
+                backgroundColor: "#e4e4e4",
+              }}
+              label={changeIndexPosition(userPostLike)?.join(", ")}
+              position="bottom-start"
             >
-              <span>
-                <HeartSolidIcon className="w-5 text-red-400" />
-              </span>
-              {item?.like?.length}
-              <span>Like</span>
-            </button>
-          ) : (
-            <div
-              className="bg-sage-100 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-red-300/80 hover:cursor-pointer"
-              onClick={handleLike}
-            >
-              <div>
-                {isLike ? (
-                  <h2 className="flex items-center gap-1 text-sm">
-                    <span>
-                      <HeartSolidIcon className="w-5 text-red-400" />
-                    </span>
-                    {totalLike}
-                    <span>Like</span>
-                  </h2>
-                ) : (
-                  <h2 className="flex items-center gap-1 text-sm">
-                    <span>
-                      <HeartOutlineIcon className="w-5" />
-                    </span>
-                    {totalLike}
-                    <span>Like</span>
-                  </h2>
-                )}
+              <div className="flex items-center gap-1.5 text-sm tracking-wide bg-sage-100 py-1 px-3 rounded-lg">
+                <span>
+                  <HeartSolidIcon className="w-5 text-red-400" />
+                </span>
+                {item?.like?.length}
+                <span>Like</span>
               </div>
-            </div>
+            </Tooltip>
+          ) : (
+            <Tooltip
+              withArrow
+              sx={{
+                color: "black",
+                backgroundColor: "#e4e4e4",
+              }}
+              label={getUsersLike()}
+              position="bottom-start"
+            >
+              <div
+                className="bg-sage-100 py-1 px-3 rounded-lg transition-all duration-200 hover:bg-red-300/80 hover:cursor-pointer"
+                onClick={handleLike}
+              >
+                <div>
+                  {isLike ? (
+                    <h2 className="flex items-center gap-1 text-sm">
+                      <span>
+                        <HeartSolidIcon className="w-5 text-red-400" />
+                      </span>
+                      {totalLike}
+                      <span>Like</span>
+                    </h2>
+                  ) : (
+                    <h2 className="flex items-center gap-1 text-sm">
+                      <span>
+                        <HeartOutlineIcon className="w-5" />
+                      </span>
+                      {totalLike}
+                      <span>Like</span>
+                    </h2>
+                  )}
+                </div>
+              </div>
+            </Tooltip>
           )}
         </div>
 
