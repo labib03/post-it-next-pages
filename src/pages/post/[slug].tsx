@@ -8,7 +8,7 @@ import {
   SplashScreen,
 } from "@/components";
 import PostComponent from "@/components/PostComponent/PostComponent";
-import FetchLikePost from "@/handler/fetchLikePost";
+import FetchLikePost from "@/handler/FetchLikePost";
 import { Comment, User } from "@/helpers/types";
 import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -78,7 +78,8 @@ function DetailPost() {
           });
         } else {
           const lengthChar = err?.response?.statusText?.length || 5;
-          toast.error(err?.response?.statusText, {
+          const errMsg = err?.response?.statusText || "Something went wrong :(";
+          toast.error(errMsg, {
             duration: lengthChar * 100,
           });
         }
