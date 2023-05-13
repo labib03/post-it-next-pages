@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import Loader from "../Loader/Loader";
+import { getSession, useSession } from "next-auth/react";
 
 type Props = {
   postId?: string | string[] | undefined;
@@ -17,6 +18,7 @@ function CreateComment({ postId }: Props) {
   useAutosizeTextArea(textAreaRef.current, inputValue);
 
   const client = useQueryClient();
+  const session = useSession();
 
   const mutation = useMutation({
     mutationFn: () => {
