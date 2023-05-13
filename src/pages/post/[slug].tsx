@@ -32,12 +32,16 @@ type queryProps = {
 };
 
 export const getServerSideProps: GetServerSideProps = async (params) => {
-  fetch("/api/posts/getPostByPostId", {
-    method: "POST",
-    body: JSON.stringify({
-      id: params?.query?.slug,
-    }),
-  });
+  try {
+    await fetch("/api/posts/getPostByPostId", {
+      method: "POST",
+      body: JSON.stringify({
+        id: params?.query?.slug,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
   return {
     props: {
