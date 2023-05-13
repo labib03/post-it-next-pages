@@ -88,38 +88,40 @@ function Dashboard() {
 
   return (
     <RootLayout>
-      <div className="w-full text-center">
-        <h1 className="font-semibold text-lg tracking-wide">
-          All Post in This Account
-        </h1>
+      <div className="bg-white px-4 py-6 rounded-lg">
+        <div className="w-full text-center">
+          <h1 className="font-semibold text-lg tracking-wide">
+            All Post in This Account
+          </h1>
+        </div>
+        {showModal && (
+          <ModalConfirmationDelete
+            showModal={showModal}
+            setShowModal={setShowModal}
+            onDelete={() => mutation.mutate()}
+            isLoading={mutation?.status === "loading"}
+            type="postingan"
+          />
+        )}
+        {query.isFetching ? (
+          <div className="flex flex-col gap-10 mt-10">
+            <Skeleton type="post" total={3} />
+          </div>
+        ) : query.status === "success" ? (
+          <AllPostDashboard
+            data={query?.data?.data || []}
+            deleteHandler={(payload: string) => deleteHandler(payload)}
+          />
+        ) : query?.isLoading ? (
+          <div className="flex flex-col gap-10 mt-10">
+            <Skeleton type="post" total={2} />
+          </div>
+        ) : (
+          <h2 className="bg-red-200 text-center py-4 mt-10">
+            Something went wrong :({" "}
+          </h2>
+        )}
       </div>
-      {showModal && (
-        <ModalConfirmationDelete
-          showModal={showModal}
-          setShowModal={setShowModal}
-          onDelete={() => mutation.mutate()}
-          isLoading={mutation?.status === "loading"}
-          type="postingan"
-        />
-      )}
-      {query.isFetching ? (
-        <div className="flex flex-col gap-10 mt-10">
-          <Skeleton type="post" total={3} />
-        </div>
-      ) : query.status === "success" ? (
-        <AllPostDashboard
-          data={query?.data?.data || []}
-          deleteHandler={(payload: string) => deleteHandler(payload)}
-        />
-      ) : query?.isLoading ? (
-        <div className="flex flex-col gap-10 mt-10">
-          <Skeleton type="post" total={2} />
-        </div>
-      ) : (
-        <h2 className="bg-red-200 text-center py-4 mt-10">
-          Something went wrong :({" "}
-        </h2>
-      )}
     </RootLayout>
   );
 }

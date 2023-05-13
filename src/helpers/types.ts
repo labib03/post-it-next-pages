@@ -11,7 +11,7 @@ export interface Post {
   createdAt: string;
   id: string;
   published: boolean;
-  title: string;
+  content: string;
   updatedAt: string;
   userId: string;
   user?: User | undefined;

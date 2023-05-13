@@ -30,7 +30,7 @@ export default async function handler(
   try {
     const result = await prisma.post.create({
       data: {
-        title: payload,
+        content: payload,
         userId: user?.id,
       },
     });

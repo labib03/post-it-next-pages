@@ -47,12 +47,10 @@ function Navbar() {
           <li>
             <button
               onClick={signOutHandler}
-              className="flex flex-row items-center gap-2 bg-red-200 border border-red-300 px-5 py-2 text-sm rounded-full tracking-wide transition-all duration-200 hover:bg-red-300"
+              className="flex flex-row items-center gap-2 bg-red-200 border border-red-300 p-2 md:px-5 md:py-2 text-sm rounded-full tracking-wide transition-all duration-200 hover:bg-red-300"
             >
-              <span>
-                <ArrowLeftOnRectangleIcon className="w-5" />
-              </span>
-              Sign Out
+              <ArrowLeftOnRectangleIcon className="w-5" />
+              <span className="hidden md:block">Sign Out</span>
             </button>
           </li>
         </>
@@ -72,11 +70,11 @@ function Navbar() {
         <div className="fixed inset-0 bg-slate-50 opacity-50 z-50"></div>
       )}
       <Link className="flex flex-row items-center gap-2" href={"/"}>
-        <PaperAirplaneIcon className="w-7 h-7" />
-        <h1 className="font-bold text-2xl">Post it.</h1>
+        <PaperAirplaneIcon className="w-6 h-6 md:w-7 md:h-7" />
+        <h1 className="font-bold text-xl md:text-2xl">Post it.</h1>
       </Link>
 
-      <ul className="list-none flex gap-4 md:gap-2 items-center">
+      <ul className="list-none flex gap-2 items-center">
         {data?.status === "loading" ? (
           <Loader borderColor="border-sage-300" text="Loading" />
         ) : (

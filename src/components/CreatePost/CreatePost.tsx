@@ -79,7 +79,7 @@ function CreatePost({ isLoading, setIsLoading }: Props) {
             ) : (
               <>
                 <PaperAirplaneIcon className="w-5" />
-                <span>Create a post</span>
+                <span className="hidden md:block">Create a post</span>
               </>
             )}
           </span>

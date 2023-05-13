@@ -34,7 +34,7 @@ export default class _Document extends Document {
         <Head>
           <title>Post It.</title>
         </Head>
-        <body className=" bg-light">
+        <body className="bg-light">
           <Main />
           <NextScript />
         </body>

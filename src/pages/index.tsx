@@ -9,6 +9,7 @@ import {
   SplashScreen,
 } from "@/components";
 import FetchLikePost from "@/handler/FetchLikePost";
+import { Divider, Paper, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useSession } from "next-auth/react";
@@ -83,37 +84,47 @@ export default function Home() {
 
   return (
     <RootLayout>
-      <div className="flex-1">
-        <div>
+      <div className="flex flex-col lg:flex-row-reverse gap-4 relative">
+        <ListUserComponent data={userQuery?.data?.data} />
+
+        <div className="flex-1 bg-white px-4 py-6 rounded-lg">
+          <div>
+            {!query?.isFetchedAfterMount ? (
+              <Skeleton type="input-post" />
+            ) : (
+              <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
+            )}
+          </div>
+
           {!query?.isFetchedAfterMount ? (
-            <Skeleton type="input-post" />
+            <div className="flex flex-col gap-10 mt-10">
+              <Skeleton type="post" total={2} />
+            </div>
+          ) : query.status === "success" ? (
+            <AllPost
+              data={query?.data?.data}
+              handleLikePost={handleLikePost}
+              handleUnlikePost={handleUnlikePost}
+            />
+          ) : query?.isLoading ? (
+            <div className="flex flex-col gap-10 mt-10">
+              <Skeleton type="post" total={1} />
+            </div>
           ) : (
-            <CreatePost isLoading={isLoading} setIsLoading={setIsloading} />
+            <h2 className="bg-red-200 text-center py-4 mt-10">
+              Something went wrong :(
+            </h2>
           )}
         </div>
 
-        {!query?.isFetchedAfterMount ? (
-          <div className="flex flex-col gap-10 mt-10">
-            <Skeleton type="post" total={2} />
-          </div>
-        ) : query.status === "success" ? (
-          <AllPost
-            data={query?.data?.data}
-            handleLikePost={handleLikePost}
-            handleUnlikePost={handleUnlikePost}
-          />
-        ) : query?.isLoading ? (
-          <div className="flex flex-col gap-10 mt-10">
-            <Skeleton type="post" total={1} />
-          </div>
-        ) : (
-          <h2 className="bg-red-200 text-center py-4 mt-10">
-            Something went wrong :({" "}
-          </h2>
-        )}
+        <div className="w-2/12 hidden lg:block">
+          <Paper shadow="xs" p="md">
+            <Text pb={8}>On going Component ...</Text>
+            <Divider pb={8} />
+            <Text>Any idea ?</Text>
+          </Paper>
+        </div>
       </div>
-
-      <ListUserComponent data={userQuery?.data?.data} />
     </RootLayout>
   );
 }

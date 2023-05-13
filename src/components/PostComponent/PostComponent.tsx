@@ -153,19 +153,22 @@ function PostComponent({
         <Image
           src={item?.user?.image || ""}
           alt="user-image"
-          className="rounded-full"
-          width={42}
-          height={42}
+          className="rounded-full w-9 h-9"
+          width={100}
+          height={100}
         />
 
         <div className="flex flex-col">
-          <h2 className="text-lg font-semibold tracking-wide text-gallery-950">
+          <h2 className="text-sm md:text-base font-semibold tracking-wide text-gallery-950">
             {item?.user?.name}
           </h2>
 
-          <p className="text-xs tracking-wide text-slate-500 flex items-center">
-            {moment(item?.createdAt).format("Do MMMM YYYY")} -{" "}
-            {moment(item?.createdAt).fromNow()}
+          <p className="text-xs tracking-wide text-slate-500 flex gap-1 items-center">
+            <span>{moment(item?.createdAt).format("Do MMMM YYYY")}</span>
+            <span className="hidden md:block">--</span>
+            <span className="hidden md:block">
+              {moment(item?.createdAt).fromNow()}
+            </span>
           </p>
         </div>
       </div>
@@ -174,12 +177,12 @@ function PostComponent({
         <pre
           className={`font-sans whitespace-pre-wrap leading-relaxed text-base tracking-wide`}
         >
-          {item?.title}
+          {item?.content}
         </pre>
       </div>
 
       <div className="flex flex-row justify-between items-center mt-4 ml-1">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1 md:gap-3">
           {disabledCommentButton ? (
             <button
               disabled={true}
@@ -189,7 +192,7 @@ function PostComponent({
                 <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
               </span>
               {item?.comment?.length}
-              <span>Komentar</span>
+              <span className="hidden md:block">Komentar</span>
             </button>
           ) : (
             <button
@@ -206,7 +209,7 @@ function PostComponent({
                   <ChatBubbleLeftRightIcon className="w-5 text-sage-400" />
                 </span>
                 {item?.comment?.length}
-                <span>Komentar</span>
+                <span className="hidden md:block">Komentar</span>
               </Link>
             </button>
           )}
@@ -226,7 +229,7 @@ function PostComponent({
                   <HeartSolidIcon className="w-5 text-red-400" />
                 </span>
                 {item?.like?.length}
-                <span>Like</span>
+                <span className="hidden md:block">Like</span>
               </div>
             </Tooltip>
           ) : (
@@ -250,7 +253,7 @@ function PostComponent({
                         <HeartSolidIcon className="w-5 text-red-400" />
                       </span>
                       {totalLike}
-                      <span>Like</span>
+                      <span className="hidden md:block">Like</span>
                     </h2>
                   ) : (
                     <h2 className="flex items-center gap-1 text-sm">
@@ -258,7 +261,7 @@ function PostComponent({
                         <HeartOutlineIcon className="w-5" />
                       </span>
                       {totalLike}
-                      <span>Like</span>
+                      <span className="hidden md:block">Like</span>
                     </h2>
                   )}
                 </div>
@@ -273,10 +276,8 @@ function PostComponent({
               onClick={() => deleteHandler(item?.id)}
               className="flex items-center gap-1 text-sm bg-red-200 px-3 py-1 rounded-md text-red-400 transition-all duration-200 hover:bg-red-400 hover:text-white"
             >
-              <span>
-                <TrashIcon className="w-4" />
-              </span>
-              Delete
+              <TrashIcon className="w-4" />
+              <span className="hidden md:block">Delete</span>
             </button>
           </div>
         )}

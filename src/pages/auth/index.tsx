@@ -32,10 +32,10 @@ function AuthScreen() {
 
   return (
     <div className="w-screen h-screen flex overflow-hidden">
-      <div className="bg-champagne-200 flex-1 flex flex-col items-center justify-center">
+      <div className="bg-champagne-200 flex-1 flex flex-col justify-center items-center px-6">
         <div className="flex flex-col gap-3 items-start">
-          <h1 className="text-4xl font-semibold">Selamat Datang</h1>
-          <h1 className="tracking-wide text-base w-4/5">
+          <h1 className="text-3xl font-semibold">Selamat Datang</h1>
+          <h1 className="tracking-wide text-base md:w-4/5">
             Anda harus login terlebih dahulu untuk melanjutkan
           </h1>
           <button
@@ -46,7 +46,7 @@ function AuthScreen() {
           </button>
         </div>
       </div>
-      <div className="bg-champagne-50 flex-1">
+      <div className="bg-champagne-50 flex-1 hidden md:block">
         <Image src={bgAuth} alt="bg-auth-image" className="w-full h-screen" />
       </div>
     </div>
