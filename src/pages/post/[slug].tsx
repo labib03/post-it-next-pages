@@ -10,13 +10,10 @@ import {
 import PostComponent from "@/components/PostComponent/PostComponent";
 import FetchLikePost from "@/handler/FetchLikePost";
 import { Comment, User } from "@/helpers/types";
-import { ChatBubbleLeftRightIcon, HeartIcon } from "@heroicons/react/24/solid";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
-import moment from "moment";
 import { GetServerSideProps } from "next";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
@@ -64,27 +61,29 @@ function DetailPost() {
   const query = useQuery({
     queryKey: ["post-detail"],
     queryFn: async () => {
-      const data = await axios.post("/api/posts/getPostByPostId", {
-        id: params?.slug,
-      });
-      return data;
-    },
-    onError: (err) => {
-      if (err instanceof AxiosError) {
-        if (err?.response?.status === 400) {
-          const lengthChar = err.response?.data?.message?.length || 5;
-          toast.error(err?.response?.data?.message, {
-            duration: lengthChar * 100,
-          });
-        } else {
-          const lengthChar = err?.response?.statusText?.length || 5;
-          const errMsg = err?.response?.statusText || "Something went wrong :(";
-          toast.error(errMsg, {
-            duration: lengthChar * 100,
-          });
-        }
+      try {
+        const data = await axios.post("/api/posts/getPostByPostId", {
+          id: params?.slug,
+        });
+        return data;
+      } catch (error) {
+        console.log(error);
       }
     },
+    // onError: (err: ErrorProps) => {
+    //   if (err?.response?.status === 400) {
+    //     const lengthChar = err.response?.data?.message?.length || 5;
+    //     toast.error(err?.response?.data?.message, {
+    //       duration: lengthChar * 100,
+    //     });
+    //   } else {
+    //     const lengthChar = err?.response?.statusText?.length || 5;
+    //     const errMsg = err?.response?.statusText || "Something went wrong :(";
+    //     toast.error(errMsg, {
+    //       duration: lengthChar * 100,
+    //     });
+    //   }
+    // },
   });
 
   const mutation = useMutation({
