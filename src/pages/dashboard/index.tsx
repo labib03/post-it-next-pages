@@ -37,7 +37,8 @@ function Dashboard() {
           });
         } else {
           const lengthChar = err?.response?.statusText?.length || 5;
-          toast.error(err?.response?.statusText, {
+          const errMsg = err?.response?.statusText || "Something went wrong :(";
+          toast.error(errMsg, {
             duration: lengthChar * 100,
           });
         }
