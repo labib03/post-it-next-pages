@@ -14,8 +14,10 @@ type Props = {
 };
 
 function AllComment({ data, deleteHandler }: Props) {
-  const parent = useRef(null);
   const session = useSession();
+  const parent = useRef(null);
+
+  console.log("first");
 
   useEffect(() => {
     parent.current && autoAnimate(parent.current);

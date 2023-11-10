@@ -4,6 +4,8 @@ import { Post } from "@/helpers/types";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import NoDataComponent from "../NoDataComponent/NoDataComponent";
 import PostComponent from "../PostComponent/PostComponent";
+import { useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 type Params = {
   name: string | undefined | null;
@@ -18,7 +20,13 @@ type Props = {
 };
 
 function AllPost({ data, handleLikePost, handleUnlikePost }: Props) {
-  const [parent] = useAutoAnimate();
+  const parent = useRef(null);
+
+  console.log("first");
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
 
   return (
     <div ref={parent} className="flex flex-col gap-10 mt-10">
