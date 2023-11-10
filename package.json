@@ -41,10 +41,7 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "add": "^2.0.6",
     "prisma": "^5.3.1",
-    "ts-node": "^10.9.1",
-    "yarn": "^1.22.19"
-  },
-  "packageManager": "yarn@1.22.19"
+    "ts-node": "^10.9.1"
+  }
 }
