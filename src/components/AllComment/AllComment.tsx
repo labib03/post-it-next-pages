@@ -1,11 +1,12 @@
 import { Comment } from "@/helpers/types";
-import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
 import "moment/locale/id";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import NoDataComponent from "../NoDataComponent/NoDataComponent";
+import { useEffect, useRef } from "react";
+import autoAnimate from "@formkit/auto-animate";
 
 type Props = {
   data: Comment[];
@@ -13,8 +14,12 @@ type Props = {
 };
 
 function AllComment({ data, deleteHandler }: Props) {
-  const [parent] = useAutoAnimate();
+  const parent = useRef(null);
   const session = useSession();
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
 
   return (
     <div ref={parent} className="flex flex-col gap-4">
